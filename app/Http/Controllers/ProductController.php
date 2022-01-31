@@ -48,7 +48,7 @@ class ProductController extends Controller
           notify()->success('تم حفظ بيانات العضو  بنجاح','عملية ناجحة');
            return redirect()->route('admin.all.product');
      }catch (\Exception $e){
-          // return $e ;
+           return $e ;
          Log::error($e->getMessage());
           notify()->error('حدث خطأ أثناء حفظ بيانات العضو','حدث خطأ');
        }

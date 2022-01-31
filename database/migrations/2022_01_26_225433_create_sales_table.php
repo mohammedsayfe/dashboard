@@ -15,18 +15,11 @@ class CreateSalesTable extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('products_id')->unique()->unsigned();
+
             $table->unsignedBigInteger('member_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('account_id');
-            $table->text('number');
             $table->text('statement')->nullable();
-
-
-            $table->foreign('products_id')
-                ->references('id')
-                ->on('products')
-                ->onDelete('cascade');
 
             $table->foreign('account_id')
                 ->references('id')
@@ -40,7 +33,7 @@ class CreateSalesTable extends Migration
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('user')
+                ->on('users')
                 ->onDelete('cascade');
 
 

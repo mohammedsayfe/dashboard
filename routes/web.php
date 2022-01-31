@@ -15,6 +15,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\SiteMapController;
 use App\Http\Controllers\SettingController;
+//use App\Http\Controllers\SalseController;
 
 
 
@@ -107,13 +108,13 @@ Route::prefix('admin')->middleware(['auth','CheckRole:ADMIN','ActiveAccount'])->
 
     ######################### begin sales Route   ########################
     Route::group(['prefix' => 'sales'], function () {
-        Route::get('/',[AccountController::class,'index']) -> name('all.sales');
-        Route::get('create',[AccountController::class,'create']) -> name('sales.create');
-        Route::post('store',[AccountController::class,'store']) -> name('sales.store');
-        Route::get('edit/{id}',[AccountController::class,'edit']) -> name('sales.edit');
-        Route::get('print/',[AccountController::class,'print']) -> name('sales.print');
-        Route::POST('update/{sales}',[AccountController::class,'update']) -> name('sales.update');
-        Route::get('delete/{id}',[AccountController::class,'delete']) -> name('sales.delete');
+        Route::get('/',[\App\Http\Controllers\SalseController::class,'index']) -> name('all.sales');
+        Route::get('create',[\App\Http\Controllers\SalseController::class,'create']) -> name('sales.create');
+        Route::post('store',[\App\Http\Controllers\SalseController::class,'store']) -> name('sales.store');
+        Route::get('edit/{id}',[\App\Http\Controllers\SalseController::class,'edit']) -> name('sales.edit');
+        Route::get('print/',[\App\Http\Controllers\SalseController::class,'print']) -> name('sales.print');
+        Route::POST('update/{sale}',[\App\Http\Controllers\SalseController::class,'update']) -> name('sales.update');
+        Route::get('delete/{id}',[\App\Http\Controllers\SalseController::class,'delete']) -> name('sales.delete');
     });
     ######################### end sales Route  ########################
 

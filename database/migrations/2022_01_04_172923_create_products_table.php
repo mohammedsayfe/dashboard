@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('description');
             $table->string('product_image')->nullable();
             $table->unsignedBigInteger('user_id');
-            $table->date('expired-date');
+            $table->date('expired_date');
             $table->rememberToken();
 
             $table->foreign('user_id')

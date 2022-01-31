@@ -19,10 +19,12 @@ class Account extends Model
         'branch',
         ];
 
+    protected $with = ['member'];
+
 
     public function member()
     {
-        return $this->belongsTo(Member::class, 'member_id','id');
+        return $this->belongsTo(Member::class, 'member_id','id')->select('id','name');
     }
 
     public function banks()
