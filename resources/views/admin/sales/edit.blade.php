@@ -1,11 +1,12 @@
 @extends('layouts.admin')
 @section('content')
-    <form id="validate-form" method="POST" action="{{ route('admin.sales.update', $sale->id) }}" class="row" enctype="multipart/form-data">
+    <form id="validate-form" method="POST" action="{{ route('admin.sales.update', $sale->id) }}" class="row"
+        enctype="multipart/form-data">
         <div class="col-12 p-3">
             <div class="col-12 col-lg-12 p-0 main-box">
                 <div class="col-12 px-0">
                     <div class="col-12 px-3 py-3">
-                        <span class="fal fa-info-circle"></span>	تعديل رقم امر البيع
+                        <span class="fal fa-info-circle"></span> تعديل رقم امر البيع - {{ $sale->id }}
                     </div>
                     <div class="col-12 divider" style="min-height: 2px;"></div>
                 </div>
@@ -18,10 +19,11 @@
                             </label>
                             <select name="account_id" class="select2 form-control">
                                 <optgroup label=" من فضلك اختررقم الحساب ">
-                                    @if($accounts && $accounts -> count() >0)
-                                        @foreach($accounts as $account)
-                                            <option
-                                                value="{{$account -> id}}">{{$account ->account_number  .'-'. $account->member->name}}</option>
+                                    @if ($accounts && $accounts->count() > 0)
+                                        @foreach ($accounts as $account)
+                                            <option {{ $sale->account_id == $account->id ? 'selected' : '' }}
+                                                value="{{ $account->id }}">
+                                                {{ $account->account_number . '-' . $account->member->name }}</option>
                                         @endforeach
                                     @endif
                                 </optgroup>
@@ -35,7 +37,8 @@
                         البيان
                     </div>
                     <div class="col-12 pt-3">
-                        <input type="text" name="statement" required value="{{$sale->statement}}" maxlength="190" class="form-control"  >
+                        <input type="text" name="statement" required value="{{ $sale->statement }}" maxlength="190"
+                            class="form-control">
                     </div>
                 </div>
             </div>
@@ -46,23 +49,60 @@
                 <div class="col-12 px-3 py-3">
                     <span class="fal fa-info-circle"></span>
                     تفاصيل المبيعات - المنتجات
-                    <button type="button" onclick="add_product()" class="btn btn-info text-white" style="float: left" >تعديل منتج</button>
+                    <button type="button" onclick="add_product()" class="btn btn-info text-white" style="float: left">إضافة
+                        منتج</button>
                 </div>
                 <div class="col-12 divider" style="min-height: 2px;"></div>
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered table-striped">
                     <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>إسم المنتج</th>
-                        <th>السعر</th>
-                        <th>الكمية</th>
-                        <th>الجمالي</th>
-                        <th>-</th>
-                    </tr>
+                        <tr>
+                            <th>#</th>
+                            <th>إسم المنتج</th>
+                            <th>السعر</th>
+                            <th>الكمية</th>
+                            <th>الجمالي</th>
+                            <th>-</th>
+                        </tr>
                     </thead>
                     <tbody id="products">
+                        @php
+                            $index = 1;
+                        @endphp
+                        @foreach ($sale->details as $saleDetail)
+                            <tr>
+                                <td>{{ $index }}
+                                    <input type="hidden" value="{{ $saleDetail->id }}"
+                                        name="products[{{ $index }}][sale_detail_id]">
+                                </td>
+                                <td>
+                                    <select id="product_id_{{ $index }}"
+                                        onchange="update_price(this,{{ $index }})"
+                                        name="products[{{ $index }}][product_id]" class="form-control">
+                                        <option>---</option>
+                                        @foreach ($products as $product)
+                                            <option id="{{ $index }}_{{ $product->id }}"
+                                                value="{{ $product->id }}" price="{{ $product->price_sale }}"
+                                                {{ $saleDetail->product_id == $product->id ? 'selected' : '' }}>
+                                                {{ $product->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td id="price_{{ $index }}">{{ $saleDetail->product->price_sale }}</td>
+                                <td><input type="number" id="qte_{{ $index }}" value="{{ $saleDetail->number }}"
+                                        onchange="calc_total({{ $index }})" required
+                                        name="products[{{ $index }}][qte]" class="form-control"
+                                        placeholder="أدخل الكمية"></td>
+                                <td id="total_{{ $index++ }}">
+                                    {{ $saleDetail->product->price_sale * $saleDetail->number }}</td>
+                                <td>
+                                    <button type="button" onclick="remove_product(this)"
+                                        sale_detail_id="{{ $saleDetail->id }}" class="btn btn-danger"><i
+                                            class="fa fa-times"></i></button>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -82,7 +122,8 @@
 @section('scripts')
 
     <script>
-        var products_index = 1
+        var products_index = Number('{{ $index }}')
+
         function add_product() {
             let tr = `
                 <tr>
@@ -90,8 +131,9 @@
                     <td>
                         <select id="product_id_${products_index}" onchange="update_price(this,${products_index})" name="products[${products_index}][product_id]" class="form-control">
                             <option>---</option>
-                            @foreach($products as $product)
-            <option id="${products_index}_{{ $product->id }}" value="{{ $product->id }}" price="{{ $product->price_sale }}">{{ $product->name }}</option>
+                            @foreach ($products as $product)
+                                <option id="${products_index}_{{ $product->id }}" value="{{ $product->id }}"
+                                    price="{{ $product->price_sale }}">{{ $product->name }}</option>
                             @endforeach
             </select>
         </td>
@@ -108,23 +150,41 @@
         }
 
         function remove_product(btn) {
-            if(confirm('are sure ?')){
-                $(btn).parent().parent().remove();
+            if (confirm('are sure ?')) {
+                if ($(btn).attr('sale_detail_id')) {
+                    console.log($(btn).attr('sale_detail_id'))
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{ route('admin.sales.delete.detail') }}",
+                        type: "POST",
+                        data: {
+                            id: $(btn).attr('sale_detail_id'),
+                        },
+                        success: function(data) {
+                            // after delete the slae detail from database then remove this row .
+                            $(btn).parent().parent().remove();
+                        },
+                    });
+                } else {
+                    $(btn).parent().parent().remove();
+                }
             }
         }
 
-        function update_price(select,index) {
-            let price_sale = $('#'+index+'_'+$(select).val()).attr('price')
-            $('#price_'+index).html('$'+price_sale)
+        function update_price(select, index) {
+            let price_sale = $('#' + index + '_' + $(select).val()).attr('price')
+            $('#price_' + index).html('$' + price_sale)
 
             calc_total(index)
         }
 
         function calc_total(index) {
-            let qte = Number($('#qte_'+index).val())
-            let price = Number($('#'+index+'_'+$('#product_id_'+index).val()).attr('price'))
+            let qte = Number($('#qte_' + index).val())
+            let price = Number($('#' + index + '_' + $('#product_id_' + index).val()).attr('price'))
 
-            $('#total_'+index).html('$'+ numberWithCommas(qte * price))
+            $('#total_' + index).html('$' + numberWithCommas(qte * price))
         }
 
         function numberWithCommas(x) {

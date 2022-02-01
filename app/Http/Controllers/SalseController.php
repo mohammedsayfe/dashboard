@@ -24,70 +24,20 @@ class SalseController extends Controller
 
     public function create()
     {
-        $members = Member::select('id','name')->get();
         $accounts = Account::select('id','account_number','member_id')->get();
         $products = Product::select('id','name','price_sale')->get();
-       return view('admin.sales.create', compact('accounts','members','products'));
+       return view('admin.sales.create', compact('accounts','products'));
     }
 
-   public function show(accounts $accounts, Request $request){
-       $accounts->update($request->all());
-   }
-
-//
- public function store(Request $request){
-       try{
-           //return $request;
-           DB::beginTransaction();
-           $account = Account::findOrFail($request->account_id);
-           $sale = Sale::create([
-               'user_id' => auth()->user()->id,
-               'member_id' => $account->member->id,
-               'account_id' => $request->account_id,
-               'statement' => $request->statement,
-           ]);
-
-           if($request->products){
-               foreach($request->products as $product){
-                   SaleDetail::create([
-                       'sale_id' => $sale->id,
-                       'product_id' => $product['product_id'],
-                       'number' => $product['qte'],
-                   ]);
-               }
-           }
-
-           DB::commit();
-
-            notify()->success('تم حفظ بيانات المبيعات  بنجاح','عملية ناجحة');
-            return redirect()->route('admin.all.sales');
-     }catch (\Exception $e){
-           DB::rollBack();
-        return $e ;
-         Log::error($e->getMessage());
-          notify()->error('حدث خطأ أثناء ادخال الحساب ','حدث خطأ');
-       }
+    public function show(Account $accounts, Request $request){
+        $accounts->update($request->all());
     }
 
-
-//Product $product
-    public function edit($id){
-        $sale = Sale::find($id);
-        $members = Member::select('id','name')->get();
-        $accounts = Account::select('id','account_number','member_id')->get();
-        $products = Product::select('id','name','price_sale')->get();
-        return view('admin.sales.edit', compact('accounts','members','products', 'sale'));
-       // return $account;
-       // return view('admin.accounts.edit', compact('account','member', 'bank'));
-    }
-
-    public function update(sale $sale, Request $request){
-          // return $request;
+    public function store(Request $request){
         try{
-            //return $request;
             DB::beginTransaction();
             $account = Account::findOrFail($request->account_id);
-            $sale ->update([
+            $sale = Sale::create([
                 'user_id' => auth()->user()->id,
                 'member_id' => $account->member->id,
                 'account_id' => $request->account_id,
@@ -96,11 +46,61 @@ class SalseController extends Controller
 
             if($request->products){
                 foreach($request->products as $product){
-                    $SaleDetail->update([
+                    SaleDetail::create([
                         'sale_id' => $sale->id,
                         'product_id' => $product['product_id'],
                         'number' => $product['qte'],
                     ]);
+                }
+            }
+
+            DB::commit();
+
+            notify()->success('تم حفظ بيانات المبيعات  بنجاح','عملية ناجحة');
+            return redirect()->route('admin.all.sales');
+        }catch (\Exception $e){
+            DB::rollBack();
+            return $e ;
+            Log::error($e->getMessage());
+            notify()->error('حدث خطأ أثناء ادخال الحساب ','حدث خطأ');
+        }
+    }
+
+    public function edit(Sale $sale){
+        $accounts = Account::select('id','account_number','member_id')->get();
+        $products = Product::select('id','name','price_sale')->get();
+        return view('admin.sales.edit', compact('accounts','products', 'sale'));
+    }
+
+    public function update(Sale $sale, Request $request){
+        try{
+            DB::beginTransaction();
+            $account = Account::findOrFail($request->account_id);
+            $sale->update([
+                'user_id' => auth()->user()->id,
+                'member_id' => $account->member->id,
+                'account_id' => $request->account_id,
+                'statement' => $request->statement,
+            ]);
+
+            if($request->products){
+                foreach($request->products as $product){
+                    if(isset($product['sale_detail_id'])){
+                        $saleDetail = SaleDetail::find($product['sale_detail_id']);
+
+                        $saleDetail->update([
+                            'sale_id' => $sale->id,
+                            'product_id' => $product['product_id'],
+                            'number' => $product['qte'],
+                        ]);
+                    }else{
+                        SaleDetail::create([
+                            'sale_id' => $sale->id,
+                            'product_id' => $product['product_id'],
+                            'number' => $product['qte'],
+                        ]);
+                    }
+
                 }
             }
 
@@ -120,14 +120,19 @@ class SalseController extends Controller
 
             $sale = Sale::find($id);
 
-        if($sale)
-            $sale->delete();
+            if($sale)
+                $sale->delete();
 
             notify()->success('تم حذف بيانات الحساب  بنجاح','عملية ناجحة');
             return redirect()->route('admin.all.sales');
 
+        }
 
-
+        public function destroy(Request $request){
+            SaleDetail::findOrFail($request->id)->delete();
+            return response()->json([
+                'message' => 'detail deleted successfully'
+            ]);
         }
 
 

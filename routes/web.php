@@ -111,9 +111,10 @@ Route::prefix('admin')->middleware(['auth','CheckRole:ADMIN','ActiveAccount'])->
         Route::get('/',[\App\Http\Controllers\SalseController::class,'index']) -> name('all.sales');
         Route::get('create',[\App\Http\Controllers\SalseController::class,'create']) -> name('sales.create');
         Route::post('store',[\App\Http\Controllers\SalseController::class,'store']) -> name('sales.store');
-        Route::get('edit/{id}',[\App\Http\Controllers\SalseController::class,'edit']) -> name('sales.edit');
+        Route::get('edit/{sale}',[\App\Http\Controllers\SalseController::class,'edit']) -> name('sales.edit');
         Route::get('print/',[\App\Http\Controllers\SalseController::class,'print']) -> name('sales.print');
         Route::POST('update/{sale}',[\App\Http\Controllers\SalseController::class,'update']) -> name('sales.update');
+        Route::POST('update/delete/detail',[\App\Http\Controllers\SalseController::class,'destroy']) -> name('sales.delete.detail');
         Route::get('delete/{id}',[\App\Http\Controllers\SalseController::class,'delete']) -> name('sales.delete');
     });
     ######################### end sales Route  ########################
