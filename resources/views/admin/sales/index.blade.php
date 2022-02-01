@@ -31,6 +31,7 @@
                         <td>{{ number_format($sale->total(),2) }}</td>
                         <td>{{ $sale-> statement}}
                         <td>
+
                             <div class="btn-group">
                                 <a href=" {{ route('admin.sales.delete',$sale->id) }}" class="btn btn-danger"> حذف</a>
                                 <a href=" {{ route('admin.sales.edit',$sale->id) }}" class="btn btn-success">تعديل</a>

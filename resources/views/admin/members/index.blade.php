@@ -28,7 +28,7 @@
                         <td>{{ $member->number_of_shares }}</td>
                         <td>
                             <div class="btn-group">
-                                <a  class="btn btn-danger"><i class="fal fa-trash"></i></a>
+                                <a href="{{ route('admin.members.destroy',$member) }}" class="btn btn-danger"><i class="fal fa-trash"></i></a>
                                 <a href="{{ route('admin.members.edit',$member) }}" class="btn btn-success"><i class="fal fa-pen"></i></a>
                             </div>
                         </td>

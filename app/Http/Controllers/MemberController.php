@@ -24,6 +24,7 @@ class MemberController extends Controller
     }
 
     public function edit(Member $member){
+
         return view('admin.members.edit', compact('member'));
     }
 
@@ -55,14 +56,30 @@ class MemberController extends Controller
                     'number_of_shares' => $request->number_of_shares,
                 ]);
 
+
                 notify()->success('تم تحديث بيانات العضو  بنجاح','عملية ناجحة');
                 return redirect()->route('admin.members.index');
             }catch (\Exception $e){
                 Log::error($e->getMessage());
                 notify()->error('حدث خطأ أثناء حفظ بيانات العضو','حدث خطأ');
             }
+            }
+        public function delete(Member $member){
+
+           // $member = Member::find($id);\
+            return $member;
+
+            if($member)
+                $member->delete();
+
+            notify()->success('تم حذف بيانات العضو  بنجاح','عملية ناجحة');
+            return redirect()->route('admin.members.index');
+
+
+
         }
 
 
 
-}
+
+    }

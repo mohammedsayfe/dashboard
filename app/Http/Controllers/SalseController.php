@@ -58,6 +58,7 @@ class SalseController extends Controller
            }
 
            DB::commit();
+         //  return $sale->total();
 
             notify()->success('تم حفظ بيانات المبيعات  بنجاح','عملية ناجحة');
             return redirect()->route('admin.all.sales');
