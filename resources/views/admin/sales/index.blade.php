@@ -31,12 +31,15 @@
                         <td>{{ number_format($sale->total(),2) }}</td>
                         <td>{{ $sale-> statement}}
                         <td>
-
                             <div class="btn-group">
-                                <a href=" {{ route('admin.sales.delete',$sale->id) }}" class="btn btn-danger"> حذف</a>
-                                <a href=" {{ route('admin.sales.edit',$sale->id) }}" class="btn btn-success">تعديل</a>
+                                @if ($sale->is_payed)
+                                    <a href=" {{ route('admin.sales.details',$sale->id) }}" class="btn btn-info w-100">الفاتورة</a>
+                                @else
+                                    <a href=" {{ route('admin.sales.delete',$sale->id) }}" class="btn btn-danger"> حذف</a>
+                                    <a href=" {{ route('admin.sales.edit',$sale->id) }}" class="btn btn-success">تعديل</a>
+                                    <a href=" {{ route('admin.sales.pay',$sale->id) }}" class="btn btn-info white">سداد الفاتورة</a>
+                                @endif
                             </div>
-{{--                           --}}
                         </td>
                     </tr>
                 @endforeach

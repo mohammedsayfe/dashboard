@@ -142,27 +142,62 @@ class SalseController extends Controller
             Log::error($e->getMessage());
             notify()->error('حدث خطأ أثناء تعديل بيانات المبيعات ','حدث خطأ');
         }
+    }
+
+    public function delete($id){
+
+        $sale = Sale::find($id);
+
+        if($sale)
+            $sale->delete();
+
+        notify()->success('تم حذف بيانات الحساب  بنجاح','عملية ناجحة');
+        return redirect()->route('admin.all.sales');
+
+    }
+
+    public function destroy(Request $request){
+        SaleDetail::findOrFail($request->id)->delete();
+        return response()->json([
+            'message' => 'detail deleted successfully'
+        ]);
+    }
+
+    public function pay($id){
+        try{
+            $sale = Sale::findOrFail($id);
+
+            $account = $sale->account;
+
+            if($account->balance >= $sale->total()){
+                $account->update([
+                    'balance' => $account->balance - $sale->total()
+                ]);
+
+                $sale->update([
+                    'is_payed' => true
+                ]);
+
+                notify()->success('تم سداد قيم الفاتورة', 'عملية ناجحة');
+                return redirect()->route('admin.all.sales');
+            }else{
+                notify()->error('عفواً, رصيد الحساب غير كافي', 'عملية فاشلة');
+                return back();
+            }
+
+        }catch(\Exception $e){
+            notify()->error('لم يتم العثور علي أمر البيع', 'عملية فاشلة');
+            return back();
         }
+    }
 
-        public function delete($id){
-
-            $sale = Sale::find($id);
-
-            if($sale)
-                $sale->delete();
-
-            notify()->success('تم حذف بيانات الحساب  بنجاح','عملية ناجحة');
-            return redirect()->route('admin.all.sales');
-
+    public function details($id){
+        try{
+            $sale = Sale::findOrFail($id);
+            return view('admin.sales.details',compact('sale'));
+        }catch(\Exception $e){
+            notify()->error('لم يتم العثور علي أمر البيع', 'عملية فاشلة');
+            return back();
         }
-
-        public function destroy(Request $request){
-            SaleDetail::findOrFail($request->id)->delete();
-            return response()->json([
-                'message' => 'detail deleted successfully'
-            ]);
-        }
-
-
-
+    }
 }

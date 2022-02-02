@@ -16,6 +16,7 @@ class Sale extends Model
         'user_id',
         'account_id',
         'statement',
+        'is_payed'
     ];
 
     protected $with = ['member','user','details'];

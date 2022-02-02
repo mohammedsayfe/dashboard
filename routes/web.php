@@ -116,6 +116,11 @@ Route::prefix('admin')->middleware(['auth','CheckRole:ADMIN','ActiveAccount'])->
         Route::POST('update/{sale}',[\App\Http\Controllers\SalseController::class,'update']) -> name('sales.update');
         Route::POST('update/delete/detail',[\App\Http\Controllers\SalseController::class,'destroy']) -> name('sales.delete.detail');
         Route::get('delete/{id}',[\App\Http\Controllers\SalseController::class,'delete']) -> name('sales.delete');
+
+        // payed the member invoice
+        Route::get('pay/invoice/{sale}', [\App\Http\Controllers\SalseController::class,'pay']) -> name('sales.pay');
+        Route::get('/details/{sale}', [\App\Http\Controllers\SalseController::class,'details']) -> name('sales.details');
+
     });
     ######################### end sales Route  ########################
 
