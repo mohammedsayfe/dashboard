@@ -111,10 +111,24 @@ Route::prefix('admin')->middleware(['auth','CheckRole:ADMIN','ActiveAccount'])->
         Route::get('/',[\App\Http\Controllers\SalseController::class,'index']) -> name('all.sales');
         Route::get('create',[\App\Http\Controllers\SalseController::class,'create']) -> name('sales.create');
         Route::post('store',[\App\Http\Controllers\SalseController::class,'store']) -> name('sales.store');
-        Route::get('edit/{id}',[\App\Http\Controllers\SalseController::class,'edit']) -> name('sales.edit');
+        Route::get('edit/{sale}',[\App\Http\Controllers\SalseController::class,'edit']) -> name('sales.edit');
         Route::get('print/',[\App\Http\Controllers\SalseController::class,'print']) -> name('sales.print');
         Route::POST('update/{sale}',[\App\Http\Controllers\SalseController::class,'update']) -> name('sales.update');
+        Route::POST('update/delete/detail',[\App\Http\Controllers\SalseController::class,'destroy']) -> name('sales.delete.detail');
         Route::get('delete/{id}',[\App\Http\Controllers\SalseController::class,'delete']) -> name('sales.delete');
+    });
+    ######################### end sales Route  ########################
+
+    ######################### begin purchases Route   ########################
+    Route::group(['prefix' => 'purchases'], function () {
+        Route::get('/',[\App\Http\Controllers\PurchaseController::class,'index']) -> name('all.purchase');
+        Route::get('create',[\App\Http\Controllers\PurchaseController::class,'create']) -> name('purchase.create');
+        Route::post('store',[\App\Http\Controllers\PurchaseController::class,'store']) -> name('purchase.store');
+        Route::get('edit/{purchases}',[\App\Http\Controllers\PurchaseController::class,'edit']) -> name('purchase.edit');
+        Route::get('print/',[\App\Http\Controllers\PurchaseController::class,'print']) -> name('purchase.print');
+        Route::POST('update/{purchases}',[\App\Http\Controllers\PurchaseController::class,'update']) -> name('purchase.update');
+        Route::POST('update/delete/detail',[\App\Http\Controllers\PurchaseController::class,'destroy']) -> name('purchase.delete.detail');
+        Route::get('delete/{id}',[\App\Http\Controllers\PurchaseController::class,'delete']) -> name('purchase.delete');
     });
     ######################### end sales Route  ########################
 

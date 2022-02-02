@@ -3,6 +3,8 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="https://nafezly.com/css/cust-fonts.css">
     <link rel="stylesheet" type="text/css" href="https://nafezly.com/css/fontawsome.min.css">
@@ -174,6 +176,17 @@
                     </a>
 
 
+
+                    <a href="{{ route('admin.all.purchase') }}" class="col-12 px-0">all.purchase
+                        <div class="col-12 item px-0 d-flex " >
+                            <div style="width: 50px" class="px-3 text-center">
+                                <span class="fal fa-money-bill font-3"> </span>
+                            </div>
+                            <div style="width: calc(100% - 50px)" class="px-2">
+                                المشتريات
+                            </div>
+                        </div>
+                    </a>
 
 
 

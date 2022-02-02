@@ -6,6 +6,8 @@ use App\Models\Account;
 use App\Models\Bank;
 use App\Models\Member;
 use App\Models\Product;
+use App\Models\Purchases;
+use App\Models\PurchasesDetail;
 use App\Models\Sale;
 use App\Models\SaleDetail;
 use App\Models\Salse;
@@ -14,24 +16,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class SalseController extends Controller
+class PurchaseController extends Controller
 {
     public function index(){
-        $sales = Sale::all();
+        $purchases = Purchases::all();
 //       return $sales;
-        return view('admin.sales.index', compact('sales'));
+        return view('admin.purchases.index', compact('purchases'));
     }
 
     public function create()
     {
-        $accounts = Account::select('id','account_number','member_id')->get();
+       // $accounts = Account::select('id','account_number','member_id')->get();
         $products = Product::select('id','name','price_sale')->get();
-       return view('admin.sales.create', compact('accounts','products'));
+       return view('admin.purchases.create',compact('products'));
     }
 
 
-   public function show(accounts $accounts, Request $request){
-       $accounts->update($request->all());
+   public function show(purchases $purchases, Request $request){
+       $purchases->update($request->all());
    }
 //
 ////
@@ -64,19 +66,20 @@ class SalseController extends Controller
     public function store(Request $request){
         try{
             DB::beginTransaction();
-            $account = Account::findOrFail($request->account_id);
-            $sale = Sale::create([
+         //   $account = Account::findOrFail($request->account_id);
+            $purchase = Purchases::create([
                 'user_id' => auth()->user()->id,
-                'member_id' => $account->member->id,
-                'account_id' => $request->account_id,
+              //  'member_id' => $account->member->id,
+              //  'account_id' => $request->account_id,
                 'statement' => $request->statement,
             ]);
 
             if($request->products){
                 foreach($request->products as $product){
-                    SaleDetail::create([
-                        'sale_id' => $sale->id,
+                    purchasesDetail::create([
+                        'purchases_id' =>  $purchase->id,
                         'product_id' => $product['product_id'],
+
                         'number' => $product['qte'],
                     ]);
                 }
@@ -85,7 +88,7 @@ class SalseController extends Controller
             DB::commit();
 
             notify()->success('تم حفظ بيانات المبيعات  بنجاح','عملية ناجحة');
-            return redirect()->route('admin.all.sales');
+            return redirect()->route('admin.all.purchase');
         }catch (\Exception $e){
             DB::rollBack();
             return $e ;
@@ -94,36 +97,36 @@ class SalseController extends Controller
         }
     }
 
-    public function edit(Sale $sale){
-        $accounts = Account::select('id','account_number','member_id')->get();
+    public function edit(purchases $purchases){
+       // $accounts = Account::select('id','account_number','member_id')->get();
         $products = Product::select('id','name','price_sale')->get();
-        return view('admin.sales.edit', compact('accounts','products', 'sale'));
+        return view('admin.purchases.edit', compact('products', 'purchases'));
     }
 
-    public function update(Sale $sale, Request $request){
+    public function update(purchases $purchases, Request $request){
         try{
             DB::beginTransaction();
-            $account = Account::findOrFail($request->account_id);
-            $sale->update([
+           // $account = Account::findOrFail($request->account_id);
+            $purchases->update([
                 'user_id' => auth()->user()->id,
-                'member_id' => $account->member->id,
-                'account_id' => $request->account_id,
+              //  'member_id' => $account->member->id,
+              //  'account_id' => $request->account_id,
                 'statement' => $request->statement,
             ]);
 
             if($request->products){
                 foreach($request->products as $product){
-                    if(isset($product['sale_detail_id'])){
-                        $saleDetail = SaleDetail::find($product['sale_detail_id']);
+                    if(isset($product['purchasesDetail_detail_id'])){
+                        $saleDetail = PurchasesDetail::find($product['purchasesDetail_detail_id']);
 
                         $saleDetail->update([
-                            'sale_id' => $sale->id,
+                            'purchases_id' => $purchases->id,
                             'product_id' => $product['product_id'],
                             'number' => $product['qte'],
                         ]);
                     }else{
                         SaleDetail::create([
-                            'sale_id' => $sale->id,
+                            'purchases_id' => $purchases->id,
                             'product_id' => $product['product_id'],
                             'number' => $product['qte'],
                         ]);
@@ -135,7 +138,7 @@ class SalseController extends Controller
             DB::commit();
 
             notify()->success('تم تعديل بيانات المبيعات  بنجاح','عملية ناجحة');
-            return redirect()->route('admin.all.sales');
+            return redirect()->route('admin.all.purchase');
         }catch (\Exception $e){
             DB::rollBack();
             return $e ;
@@ -146,13 +149,13 @@ class SalseController extends Controller
 
         public function delete($id){
 
-            $sale = Sale::find($id);
+            $purchase = Purchases::find($id);
 
-            if($sale)
-                $sale->delete();
+            if($purchase)
+                $purchase->delete();
 
             notify()->success('تم حذف بيانات الحساب  بنجاح','عملية ناجحة');
-            return redirect()->route('admin.all.sales');
+            return redirect()->route('admin.all.purchase');
 
         }
 

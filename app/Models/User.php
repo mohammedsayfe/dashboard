@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Log;
 
 class User extends Authenticatable
 {
@@ -16,7 +17,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $guarded = [ 
+    protected $guarded = [
     ];
 
     /**
@@ -52,11 +53,11 @@ class User extends Authenticatable
 
     public function getUserAvatar(){
         if($this->avatar==null)
-            return env('DEFAULT_IMAGE_AVATAR');
+            return env('DEFAULT_IMAGE_AVATAR',asset('images/default/avatar.png'));
         else
             return env('STORAGE_URL').'/uploads/users/'.$this->avatar;
     }
-    
+
 
 
 }

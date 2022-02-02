@@ -40,7 +40,10 @@
                         </td>
                     </tr>
                 @endforeach
-
+                    <tr>
+                        <th colspan="4" style="text-align: left">إجمالي المبيعات</th>
+                        <th colspan="3">{{ number_format($sales->map( function($sale){ return $sale->total(); })->sum(),2) }}</th>
+                    </tr>
                 </tbody>
             </table>
         </div>

@@ -1,43 +1,23 @@
 @extends('layouts.admin')
 @section('content')
-    <form id="validate-form" method="POST" action="{{ route('admin.sales.update', $sale->id) }}" class="row"
+    <form id="validate-form" method="POST" action="{{ route('admin.purchase.update', $purchases->id) }}" class="row"
         enctype="multipart/form-data">
         <div class="col-12 p-3">
             <div class="col-12 col-lg-12 p-0 main-box">
                 <div class="col-12 px-0">
                     <div class="col-12 px-3 py-3">
-                        <span class="fal fa-info-circle"></span> تعديل رقم امر البيع - {{ $sale->id }}
+                        <span class="fal fa-info-circle"></span> تعديل رقم امر الشراء - {{ $purchases->id }}
                     </div>
                     <div class="col-12 divider" style="min-height: 2px;"></div>
                 </div>
                 @csrf
-                <div class="col-12 p-2">
-                    <div class="col-12">
-                        <div class="form-group col-md-12">
-                            <label for="inputEmail4">
-                                رقم الحساب
-                            </label>
-                            <select name="account_id" class="select2 form-control">
-                                <optgroup label=" من فضلك اختررقم الحساب ">
-                                    @if ($accounts && $accounts->count() > 0)
-                                        @foreach ($accounts as $account)
-                                            <option {{ $sale->account_id == $account->id ? 'selected' : '' }}
-                                                value="{{ $account->id }}">
-                                                {{ $account->account_number . '-' . $account->member->name }}</option>
-                                        @endforeach
-                                    @endif
-                                </optgroup>
-                            </select>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="col-12 p-2">
                     <div class="col-12">
-                        البيان
+                        وصف امر الشراء
                     </div>
                     <div class="col-12 pt-3">
-                        <input type="text" name="statement" required value="{{ $sale->statement }}" maxlength="190"
+                        <input type="text" name="statement" required value="{{ $purchases->statement }}" maxlength="190"
                             class="form-control">
                     </div>
                 </div>
@@ -48,7 +28,7 @@
             <div class="col-12 px-0">
                 <div class="col-12 px-3 py-3">
                     <span class="fal fa-info-circle"></span>
-                    تفاصيل المبيعات - المنتجات
+                    تفاصيل مشتريات - المنتجات
                     <button type="button" onclick="add_product()" class="btn btn-info text-white" style="float: left">إضافة
                         منتج</button>
                 </div>
@@ -70,11 +50,11 @@
                         @php
                             $index = 1;
                         @endphp
-                        @foreach ($sale->details as $saleDetail)
+                        @foreach ($purchases->details as $purchasesDetail)
                             <tr>
                                 <td>{{ $index }}
-                                    <input type="hidden" value="{{ $saleDetail->id }}"
-                                        name="products[{{ $index }}][sale_detail_id]">
+                                    <input type="hidden" value="{{ $purchasesDetail->id }}"
+                                        name="products[{{ $index }}][purchasesDetail_detail_id]">
                                 </td>
                                 <td>
                                     <select id="product_id_{{ $index }}"
@@ -84,21 +64,21 @@
                                         @foreach ($products as $product)
                                             <option id="{{ $index }}_{{ $product->id }}"
                                                 value="{{ $product->id }}" price="{{ $product->price_sale }}"
-                                                {{ $saleDetail->product_id == $product->id ? 'selected' : '' }}>
+                                                {{ $purchasesDetail->product_id == $product->id ? 'selected' : '' }}>
                                                 {{ $product->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
-                                <td id="price_{{ $index }}">{{ $saleDetail->product->price_sale }}</td>
-                                <td><input type="number" id="qte_{{ $index }}" value="{{ $saleDetail->number }}"
+                                <td id="price_{{ $index }}">{{ $purchasesDetail->product->price_sale }}</td>
+                                <td><input type="number" id="qte_{{ $index }}" value="{{ $purchasesDetail->number }}"
                                         onchange="calc_total({{ $index }})" required
                                         name="products[{{ $index }}][qte]" class="form-control"
                                         placeholder="أدخل الكمية"></td>
                                 <td id="total_{{ $index++ }}">
-                                    {{ $saleDetail->product->price_sale * $saleDetail->number }}</td>
+                                    {{ $purchasesDetail->product->price_sale * $purchasesDetail->number }}</td>
                                 <td>
                                     <button type="button" onclick="remove_product(this)"
-                                        sale_detail_id="{{ $saleDetail->id }}" class="btn btn-danger"><i
+                                            purchasesDetail_detail_id="{{ $purchasesDetail->id }}" class="btn btn-danger"><i
                                             class="fa fa-times"></i></button>
                                 </td>
                             </tr>
@@ -151,16 +131,16 @@
 
         function remove_product(btn) {
             if (confirm('are sure ?')) {
-                if ($(btn).attr('sale_detail_id')) {
-                    console.log($(btn).attr('sale_detail_id'))
+                if ($(btn).attr('purchasesDetail_detail_id')) {
+                    console.log($(btn).attr('purchasesDetail_detail_id'))
                     $.ajax({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        url: "{{ route('admin.sales.delete.detail') }}",
+                        url: "{{ route('admin.purchase.delete.detail') }}",
                         type: "POST",
                         data: {
-                            id: $(btn).attr('sale_detail_id'),
+                            id: $(btn).attr('purchasesDetail_detail_id'),
                         },
                         success: function(data) {
                             // after delete the slae detail from database then remove this row .

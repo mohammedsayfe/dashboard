@@ -18,9 +18,9 @@ class UsersSeeder extends Seeder
             \App\Models\User::create([
                 'name'=>"ADMIN",
                 'power'=>"ADMIN",
-                'email'=>env('DEFAULT_EMAIL'),
-                'email_verified_at'=>date("Y-m-d h:i:s"), 
-                'password'=>bcrypt(env('DEFAULT_PASSWORD'))
+                'email'=>env('DEFAULT_EMAIL', 'admin@admin.com'),
+                'email_verified_at'=>date("Y-m-d h:i:s"),
+                'password'=>bcrypt(env('DEFAULT_PASSWORD','password'))
             ]);
     }
 }
