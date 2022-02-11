@@ -106,7 +106,8 @@ class PurchaseController extends Controller
     public function update(purchases $purchases, Request $request){
         try{
             DB::beginTransaction();
-           // $account = Account::findOrFail($request->account_id);
+           // $a7
+            //ccount = Account::findOrFail($request->account_id);
             $purchases->update([
                 'user_id' => auth()->user()->id,
               //  'member_id' => $account->member->id,
@@ -117,10 +118,16 @@ class PurchaseController extends Controller
             if($request->products){
                 foreach($request->products as $product){
                     if(isset($product['purchasesDetail_detail_id'])){
+                        //الخزينه//
                         $saleDetail = PurchasesDetail::find($product['purchasesDetail_detail_id']);
-
+                        $safe=safe::findOrNew(1);
+                        $safe->balance =$safe->balance - $purchase->total();
+                        $safe->save();
+                             // //
                         $saleDetail->update([
                             'purchases_id' => $purchases->id,
+
+
                             'product_id' => $product['product_id'],
                             'number' => $product['qte'],
                         ]);

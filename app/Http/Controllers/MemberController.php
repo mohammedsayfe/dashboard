@@ -19,9 +19,22 @@ class MemberController extends Controller
        return view('admin.members.create');
     }
 
-    public function show(Member $member, Request $request){
-        $member->update($request->all());
+    public function show($id){
+        try{
+            $member = Member::findOrFail($id);
+            return view('admin.members.details',compact('member'));
+        }catch(\Exception $e){
+            notify()->error('لم يتم العثور علي أمر البيع', 'عملية فاشلة');
+            return back();
+        }
     }
+
+
+
+
+    //(Member $member, Request $request){
+       // $member->update($request->all());
+   // }
 
     public function edit(Member $member){
 
@@ -64,20 +77,33 @@ class MemberController extends Controller
                 notify()->error('حدث خطأ أثناء حفظ بيانات العضو','حدث خطأ');
             }
             }
-        public function delete(Member $member){
+  //Member $member
+        public function delete($id){
 
-           // $member = Member::find($id);\
-            return $member;
+            $member = Member::find($id);
+
+          //  return $member;
 
             if($member)
                 $member->delete();
 
             notify()->success('تم حذف بيانات العضو  بنجاح','عملية ناجحة');
-            return redirect()->route('admin.members.index');
+            return redirect()->route('admin.all.member');
 
-
+           // admin.members.index
 
         }
+
+    public function details($id){
+        try{
+            $member = Member::findOrFail($id);
+            $data = Member::all();
+            return view('admin.members.details',compact('member','data'));
+        }catch(\Exception $e){
+            notify()->error('لم يتم العثور علي أمر البيع', 'عملية فاشلة');
+            return back();
+        }
+    }
 
 
 

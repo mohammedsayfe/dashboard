@@ -5,6 +5,7 @@
         <h1 class="m-2 px-2 bold">
             لائحة الاعضاء
             <a href="{{ route('admin.members.create') }}" class="btn btn-info text-white" style="float: left" >إضافة عضو</a>
+            <a href="{{ route('admin.members.details',3) }}" class="btn btn-info text-white" style="float: left" >تفاصيل الاعضاء</a>
         </h1>
         <div class="table-responsive">
             <table class="table table-bordered table-striped">

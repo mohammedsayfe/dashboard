@@ -6,6 +6,7 @@ use App\Models\Account;
 use App\Models\Bank;
 use App\Models\Member;
 use App\Models\Product;
+use App\Models\Safe;
 use App\Models\Sale;
 use App\Models\SaleDetail;
 use App\Models\Salse;
@@ -163,6 +164,7 @@ class SalseController extends Controller
         ]);
     }
 
+
     public function pay($id){
         try{
             $sale = Sale::findOrFail($id);
@@ -172,7 +174,16 @@ class SalseController extends Controller
             if($account->balance >= $sale->total()){
                 $account->update([
                     'balance' => $account->balance - $sale->total()
-                ]);
+
+
+
+                    ]);
+
+
+                 $safe=safe::findOrNew(1);
+                $safe->balance =$safe->balance + $sale->total();
+                $safe->save();
+
 
                 $sale->update([
                     'is_payed' => true
@@ -185,7 +196,10 @@ class SalseController extends Controller
                 return back();
             }
 
-        }catch(\Exception $e){
+        }catch(\Exception $e)
+
+        {return $e->getMessage()
+            ;
             notify()->error('لم يتم العثور علي أمر البيع', 'عملية فاشلة');
             return back();
         }

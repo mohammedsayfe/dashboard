@@ -50,7 +50,7 @@
                         عدد الاسهم
                     </div>
                     <div class="col-12 pt-3">
-                        <input type="text" name="number_of_shares" value="{{ $member->number_of_shares }}" required minlength="3" maxlength="190" class="form-control"  >
+                        <input type="number" name="number_of_shares" value="{{ $member->number_of_shares }}" required minlength="" maxlength="190" class="form-control"  >
                     </div>
                 </div>
             </div>
