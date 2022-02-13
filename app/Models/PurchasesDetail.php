@@ -15,7 +15,7 @@ class PurchasesDetail extends Model
 
     protected $fillable = [
         'product_id',
-        'purchases_id',
+        'purchase_id',
         'number',
     ];
 

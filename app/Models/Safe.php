@@ -12,7 +12,6 @@ class Safe extends Model
 
     protected $fillable = [
         'balance',
-        
         ];
 
 

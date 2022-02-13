@@ -18,7 +18,8 @@ class Product extends Model
         'description',
         'product_image',
         'user_id',
-        'expired_date'
+        'expired_date',
+        'quantity',
     ];
 
     public function users()

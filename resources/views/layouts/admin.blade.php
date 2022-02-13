@@ -121,17 +121,29 @@
                     <a href="{{ route('admin.all.product') }}" class="col-12 px-0">
                         <div class="col-12 item px-0 d-flex " >
                             <div style="width: 50px" class="px-3 text-center">
-                                <span class="fal fa-users font-3"> </span>
+                                <span class="fad fa-box font-3"> </span>
                             </div>
                             <div style="width: calc(100% - 50px)" class="px-2">
                                 المنتجات
                             </div>
                         </div>
                     </a>
+
+                    <a href="{{ route('admin.product.stock') }}" class="col-12 px-0">
+                        <div class="col-12 item px-0 d-flex " >
+                            <div style="width: 50px" class="px-3 text-center">
+                                <span class="fal fa-toolbox font-3"> </span>
+                            </div>
+                            <div style="width: calc(100% - 50px)" class="px-2">
+                                المخزون
+                            </div>
+                        </div>
+                    </a>
+
                     <a href="{{ route('admin.all.expens') }}" class="col-12 px-0">
                         <div class="col-12 item px-0 d-flex " >
                             <div style="width: 50px" class="px-3 text-center">
-                                <span class="fal fa-users font-3"> </span>
+                                <span class="fal fa-arrow-down font-3"> </span>
                             </div>
                             <div style="width: calc(100% - 50px)" class="px-2">
                                 المصروفات
@@ -144,7 +156,7 @@
                     <a href="{{ route('admin.all.bank') }}" class="col-12 px-0">
                         <div class="col-12 item px-0 d-flex " >
                             <div style="width: 50px" class="px-3 text-center">
-                                <span class="fal fa-users font-3"> </span>
+                                <span class="fad fa-piggy-bank font-3"> </span>
                             </div>
                             <div style="width: calc(100% - 50px)" class="px-2">
                                 البنوك
@@ -171,8 +183,6 @@
                             </div>
                             <div style="width: calc(100% - 50px)" class="px-2">
                                 المبيعات
-                                {{ \App\Models\Safe::findOrNew(1)->balance}}
-
                             </div>
                         </div>
                     </a>
@@ -190,116 +200,10 @@
                         </div>
                     </a>
 
-
-
-
-
-
-
-                    {{--                    <li class="nav-item">--}}
-{{--                        <a href=""><i class="la la-map-signs"></i>--}}
-{{--                            <span class="menu-title" data-i18n="nav.dash.main"> </span>--}}
-{{--                            --}}{{-- <span class="badge badge badge-success badge-pill float-right mr-2">--}}
-{{--                                {{ 67 }}--}}
-{{--                            </span> --}}
-{{--                        </a>--}}
-{{--                        <ul class="menu-content">--}}
-{{--                            <li class="{{ url()->current() == route('admin.branch') ? 'active' : ''  }}">--}}
-{{--                                <a class="menu-item" href="{{route('admin.branch')}}"--}}
-{{--                                   data-i18n="nav.dash.ecommerce"> عرض الكل </a>--}}
-{{--                            </li>--}}
-{{--                            <li class="{{ url()->current() == route('admin.branch.create') ? 'active' : ''  }}">--}}
-{{--                                <a class="menu-item" href="{{route('admin.branch.create')}}"--}}
-{{--                                   data-i18n="nav.dash.ecommerce"> اضافة فرع جديد </a>--}}
-{{--                            </li>--}}
-
-{{--                        </ul>--}}
-{{--                    </li>--}}
-
-                    {{--<a href="#" class="col-12 px-0">
-                        <div class="col-12 item px-0 d-flex " >
-                            <div style="width: 50px" class="px-3 text-center">
-                                <span class="fab fa-youtube font-3"> </span>
-                            </div>
-                            <div style="width: calc(100% - 50px)" class="px-2">
-                                الدورات التعليمية
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="col-12 px-0">
-                        <div class="col-12 item px-0 d-flex " >
-                            <div style="width: 50px" class="px-3 text-center">
-                                <span class="fas fa-hands-helping font-3"> </span>
-                            </div>
-                            <div style="width: calc(100% - 50px)" class="px-2">
-                                شركاء النجاح
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="col-12 px-0">
-                        <div class="col-12 item px-0 d-flex " >
-                            <div style="width: 50px" class="px-3 text-center">
-                                <span class="fal fa-box-full font-3"> </span>
-                            </div>
-                            <div style="width: calc(100% - 50px)" class="px-2">
-                                الكورسات
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="col-12 px-0">
-                        <div class="col-12 item px-0 d-flex " >
-                            <div style="width: 50px" class="px-3 text-center">
-                                <span class="fal fa-play font-3"> </span>
-                            </div>
-                            <div style="width: calc(100% - 50px)" class="px-2">
-                                الفيديوهات
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="col-12 px-0">
-                        <div class="col-12 item px-0 d-flex " >
-                            <div style="width: 50px" class="px-3 text-center">
-                                <span class="fal fa-stars font-3"> </span>
-                            </div>
-                            <div style="width: calc(100% - 50px)" class="px-2">
-                                التقييمات
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="col-12 px-0">
-                        <div class="col-12 item px-0 d-flex " >
-                            <div style="width: 50px" class="px-3 text-center">
-                                <span class="fal fa-box-check font-3"> </span>
-                            </div>
-                            <div style="width: calc(100% - 50px)" class="px-2">
-                                الطلبات
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="col-12 px-0">
-                        <div class="col-12 item px-0 d-flex " >
-                            <div style="width: 50px" class="px-3 text-center">
-                                <span class="fal fa-sack-dollar font-3"> </span>
-                            </div>
-                            <div style="width: calc(100% - 50px)" class="px-2">
-                                عمليات الدفع
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="col-12 px-0">
-                        <div class="col-12 item px-0 d-flex " >
-                            <div style="width: 50px" class="px-3 text-center">
-                                <span class="fal fa-book font-3"> </span>
-                            </div>
-                            <div style="width: calc(100% - 50px)" class="px-2">
-                                مقالات - أخبار
-                            </div>
-                        </div>
-                    </a> --}}
                     <a href="{{ route('admin.assest.create') }}" class="col-12 px-0">
                         <div class="col-12 item px-0 d-flex " >
                             <div style="width: 50px" class="px-3 text-center">
-                                <span class="fal fa-users font-3"> </span>
+                                <span class="fal fa-building font-3"> </span>
                             </div>
                             <div style="width: calc(100% - 50px)" class="px-2">
                                الاصول

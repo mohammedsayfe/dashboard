@@ -174,13 +174,16 @@ class SalseController extends Controller
             if($account->balance >= $sale->total()){
                 $account->update([
                     'balance' => $account->balance - $sale->total()
+                ]);
 
-
-
+                foreach($sale->details as $detail){
+                    $product = Product::find($detail->product_id);
+                    $product->update([
+                        'quantity' => $product->quantity - $detail->number
                     ]);
+                }
 
-
-                 $safe=safe::findOrNew(1);
+                $safe=safe::findOrNew(1);
                 $safe->balance =$safe->balance + $sale->total();
                 $safe->save();
 

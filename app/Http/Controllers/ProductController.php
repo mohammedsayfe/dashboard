@@ -16,6 +16,11 @@ class ProductController extends Controller
         return view('admin.products.index', compact('product'));
     }
 
+    public function stock(){
+        $data = Product::select('id','name','quantity','price_sale','price_buy')->get();
+        return view('admin.products.stock', compact('data'));
+    }
+
     public function create()
     {
         $data =User::all();
@@ -26,30 +31,29 @@ class ProductController extends Controller
         $member->update($request->all());
    }
 
-//Product $product
+
     public function edit($id){
         $user = User::all();
         $product = Product::find($id);
-       return view('admin.products.edit', compact('product','user'));
-  }
- public function store(Request $request){
-       // return $request;
+        return view('admin.products.edit', compact('product', 'user'));
+    }
+
+    public function store(Request $request){
        try{
             Product::create([
                 'name' => $request->name,
                 'price_buy' => $request->price_puy,
-               'price_sale' => $request->price_sale,
-              'description' => $request->description,
-//                'product_image' => $request->image,
+                'price_sale' => $request->price_sale,
+                'description' => $request->description,
                 'user_id' => $request->user_name,
                 'expired_date' => $request->expire_date,
             ]);
 
-          notify()->success('تم حفظ بيانات العضو  بنجاح','عملية ناجحة');
+            notify()->success('تم حفظ بيانات العضو  بنجاح','عملية ناجحة');
            return redirect()->route('admin.all.product');
      }catch (\Exception $e){
            return $e ;
-         Log::error($e->getMessage());
+            Log::error($e->getMessage());
           notify()->error('حدث خطأ أثناء حفظ بيانات العضو','حدث خطأ');
        }
     }

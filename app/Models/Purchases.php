@@ -33,7 +33,7 @@ class Purchases extends Model
     }
 
     public function details(){
-        return $this->hasMany(PurchasesDetail::class);
+        return $this->hasMany(PurchasesDetail::class,'purchase_id');
     }
 
     public function total(){

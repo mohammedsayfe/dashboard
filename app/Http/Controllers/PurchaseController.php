@@ -8,9 +8,8 @@ use App\Models\Member;
 use App\Models\Product;
 use App\Models\Purchases;
 use App\Models\PurchasesDetail;
-use App\Models\Sale;
+use App\Models\Safe;
 use App\Models\SaleDetail;
-use App\Models\Salse;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -35,59 +34,44 @@ class PurchaseController extends Controller
    public function show(purchases $purchases, Request $request){
        $purchases->update($request->all());
    }
-//
-////
-// public function store(Request $request){
-//       try{
-//           //return $request;
-//           DB::beginTransaction();
-//           $account = Account::findOrFail($request->account_id);
-//           $sale = Sale::create([
-//               'user_id' => auth()->user()->id,
-//               'member_id' => $account->member->id,
-//               'account_id' => $request->account_id,
-//               'statement' => $request->statement,
-//           ]);
-//
-//           if($request->products){
-//               foreach($request->products as $product){
-//                   SaleDetail::create([
-//                       'sale_id' => $sale->id,
-//                       'product_id' => $product['product_id'],
-//                       'number' => $product['qte'],
-//                   ]);
-//               }
-//           }
-//
-//           DB::commit();
-         //  return $sale->total();
-
 
     public function store(Request $request){
         try{
             DB::beginTransaction();
-         //   $account = Account::findOrFail($request->account_id);
             $purchase = Purchases::create([
                 'user_id' => auth()->user()->id,
-              //  'member_id' => $account->member->id,
-              //  'account_id' => $request->account_id,
                 'statement' => $request->statement,
             ]);
 
+            $total = 0;
             if($request->products){
                 foreach($request->products as $product){
-                    purchasesDetail::create([
-                        'purchases_id' =>  $purchase->id,
+                    PurchasesDetail::create([
+                        'purchase_id' =>  $purchase->id,
                         'product_id' => $product['product_id'],
-
                         'number' => $product['qte'],
                     ]);
+
+
                 }
             }
 
+            foreach($purchase->details as $detail){
+                $product = Product::find($detail->product_id);
+                $product->update([
+                    'quantity' => $product->quantity + $detail->number
+                ]);
+
+            }
+
+            $safe=Safe::findOrNew(1);
+            $safe->balance =$safe->balance - $purchase->total();
+            $safe->save();
+
+
             DB::commit();
 
-            notify()->success('تم حفظ بيانات المبيعات  بنجاح','عملية ناجحة');
+            notify()->success('تم حفظ بيانات المشتريات  بنجاح','عملية ناجحة');
             return redirect()->route('admin.all.purchase');
         }catch (\Exception $e){
             DB::rollBack();
@@ -120,14 +104,8 @@ class PurchaseController extends Controller
                     if(isset($product['purchasesDetail_detail_id'])){
                         //الخزينه//
                         $saleDetail = PurchasesDetail::find($product['purchasesDetail_detail_id']);
-                        $safe=safe::findOrNew(1);
-                        $safe->balance =$safe->balance - $purchase->total();
-                        $safe->save();
-                             // //
                         $saleDetail->update([
                             'purchases_id' => $purchases->id,
-
-
                             'product_id' => $product['product_id'],
                             'number' => $product['qte'],
                         ]);
@@ -138,7 +116,6 @@ class PurchaseController extends Controller
                             'number' => $product['qte'],
                         ]);
                     }
-
                 }
             }
 
