@@ -25,7 +25,7 @@
                         رقم الهوية
                     </div>
                     <div class="col-12 pt-3">
-                        <input type="text" name="id_number" required minlength="3" maxlength="190" class="form-control"  >
+                        <input type="text" name="id_number" required  maxlength="190" class="form-control"  >
                     </div>
                 </div>
                 <div class="col-12 p-2">
@@ -35,13 +35,19 @@
                     <div class="col-12 pt-3">
                         <input type="email" name="email" required minlength="3" maxlength="190" class="form-control"  >
                     </div>
+                    <div class="col-12">
+                        البريد الالكتروني
+                    </div>
+                    <div class="col-12 pt-3">
+                        <input type="number" name="password" required  maxlength="190" class="form-control"  >
+                    </div>
                 </div>
                 <div class="col-12 p-2">
                     <div class="col-12">
                         رقم الهاتف
                     </div>
                     <div class="col-12 pt-3">
-                        <input type="text" name="phone" required minlength="3" maxlength="190" class="form-control"  >
+                        <input type="number" name="phone" required minlength="3" maxlength="190" class="form-control"  >
                     </div>
                 </div>
                 <div class="col-12 p-2">

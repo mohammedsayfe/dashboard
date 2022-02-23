@@ -96,6 +96,15 @@ class ProductController extends Controller
 
 
         }
+    public function details(){
+        try{
+            $data = Product::all();
+            return view('admin.product.details',compact('',  'data'));
+        }catch(\Exception $e){
+            notify()->error('لم يتم العثور علي أمر البيع', 'عملية فاشلة');
+            return back();
+        }
+    }
 
 
 

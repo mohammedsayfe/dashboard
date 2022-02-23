@@ -7,6 +7,7 @@
         <h1 class="m-2 px-2 bold">
             لائحة الاعضاء
             <a href="{{ route('admin.product.create') }}" class="btn btn-info text-white" style="float: left" >إضافة منتجات جديده</a>
+            <a href="{{ route('admin.product.details') }}" class="btn btn-info text-white" style="float: left" >تفاصيل عن  المنتجات</a>
         </h1>
         <div class="table-responsive">
             <table class="table table-bordered table-striped">

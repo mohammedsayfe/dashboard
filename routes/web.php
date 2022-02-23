@@ -16,6 +16,8 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\SiteMapController;
 use App\Http\Controllers\SettingController;
 //use App\Http\Controllers\SalseController;
+//MemberController
+//use App\Http\Controllers\MemberController;
 
 
 
@@ -54,8 +56,12 @@ Route::prefix('admin')->middleware(['auth','CheckRole:ADMIN','ActiveAccount'])->
         Route::get('print/',[ProductController::class,'print']) -> name('product.print');
         Route::post('update/{product}',[ProductController::class,'update']) -> name('product.update');
         Route::get('delete/{id}',[ProductController::class,'delete']) -> name('product.delete');
+
+        //Report About product
+        Route::get('/details/', [\App\Http\Controllers\ProductController::class,'details']) -> name('product.details');
     });
     ######################### End  product Routes  ########################
+
 
 
 
@@ -68,6 +74,8 @@ Route::prefix('admin')->middleware(['auth','CheckRole:ADMIN','ActiveAccount'])->
         Route::get('print/',[AssetsController::class,'print']) -> name('assest.print');
         Route::post('update/{assets}',[AssetsController::class,'update']) -> name('assest.update');
         Route::get('delete/{id}',[AssetsController::class,'delete']) -> name('assest.delete');
+
+        Route::get('/details/', [\App\Http\Controllers\AssetsController::class,'details']) -> name('assest.details');
     });
     ######################### End  branches Routes  ########################
 
@@ -175,6 +183,9 @@ Route::prefix('admin')->middleware(['auth','CheckRole:ADMIN','ActiveAccount'])->
     //Route::get('member',[MemberController::Controller::class,'create'])->name('create');
 });
 
+// Login member
+
+Route::get('loginMemeber',[MemberController::class,'LoginMember'])->name('LoginMember');
 
 Route::get('blocked',[HelperController::class,'blocked_user'])->name('blocked');
 Route::get('robots.txt',[HelperController::class,'robots']);

@@ -104,7 +104,10 @@ class MemberController extends Controller
             return back();
         }
     }
-
+public function LoginMember()
+{
+    
+}
 
 
 

@@ -79,6 +79,7 @@
     <div class="text-center">
         <button onclick="print_page('#invoice')" class="btn btn-success">طباعة</button>
     </div>
+    <a href="{{ route('admin.sales.create') }}" class="btn btn-info text-white" style="float: left" >رجوع</a>
 @endsection
 @section('scripts')
     <script>

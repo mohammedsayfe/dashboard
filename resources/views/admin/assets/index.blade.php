@@ -5,6 +5,7 @@
         <h1 class="m-2 px-2 bold">
              الاصول
             <a href="{{ route('admin.assest.create') }}" class="btn btn-info text-white" style="float: left" >إضافة اصل جديده</a>
+            <a href="{{ route('admin.assest.details') }}" class="btn btn-info text-white" style="float: left" >تفاصيل الاصول</a>
         </h1>
         <div class="table-responsive">
             <table class="table table-bordered table-striped">

@@ -85,6 +85,16 @@ class AssetsController extends Controller
 
     }
 
+    public function details(){
+        try{
+            $asset  = Assets::all();
+            return view('admin.assest.details',compact('assest'));
+        }catch(\Exception $e){
+            notify()->error('لم يتم العثور علي أمر البيع', 'عملية فاشلة');
+            return back();
+        }
+    }
+
 
 
 }
