@@ -35,12 +35,15 @@
                     <div class="col-12 pt-3">
                         <input type="email" name="email" required minlength="3" maxlength="190" class="form-control"  >
                     </div>
-                    <div class="col-12">
-                        البريد الالكتروني
-                    </div>
-                    <div class="col-12 pt-3">
-                        <input type="number" name="password" required  maxlength="190" class="form-control"  >
-                    </div>
+
+                    <div class="col-12 p-2">
+                        <div class="col-12">
+                           كلمه المرور
+                        </div>
+                        <div class="col-12 pt-3">
+                            <input type="text" name="email" required minlength="3" maxlength="190" class="form-control"  >
+                        </div>
+
                 </div>
                 <div class="col-12 p-2">
                     <div class="col-12">
@@ -61,6 +64,11 @@
             </div>
             <div class="col-12 p-3">
                 <button class="btn btn-success" id="submitEvaluation">حفظ</button>
+            </div>
+            <div class="col-12 p-3">
+                <div class="col-12 p-3">
+                    <a href="{{ route('admin.members.index') }}" class="btn btn-info text-white" style="float: left" >رجوع</a>
+                </div>
             </div>
 		</form>
 	</div>

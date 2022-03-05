@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
+use DB;
 class MemberController extends Controller
 {
     public function index(){
@@ -88,27 +90,63 @@ class MemberController extends Controller
                 $member->delete();
 
             notify()->success('تم حذف بيانات العضو  بنجاح','عملية ناجحة');
-            return redirect()->route('admin.all.member');
+            return redirect()->route('admin.members.index');
 
            // admin.members.index
 
         }
 
-    public function details($id){
+    public function details(){
         try{
-            $member = Member::findOrFail($id);
             $data = Member::all();
-            return view('admin.members.details',compact('member','data'));
+            return view('admin.members.details',compact('data'));
         }catch(\Exception $e){
             notify()->error('لم يتم العثور علي أمر البيع', 'عملية فاشلة');
             return back();
         }
     }
+
 public function LoginMember()
 {
-    
+
 }
 
+public function getcheckpassword($id){
+    try{
+            // $Data = DB::table('sales')->where('member_id','=',$id)->first();
+            // dd($Data);
+            $passwordData = Member::findOrFail($id);
+            $data = DB::table('members')->where('id','=',$id)->first();
+            // dd($data);
+          return view('member.sales.checkpassword',compact('data'));
 
+}catch(\Exception $e){
+   notify()->error('لم يتم العثور عل الامر ', 'عملية فاشلة');
+return back();
+
+}
+}
+public function checkpassword(Request $request){
+
+    // dd($decrypto);
+    try{
+        $pass = $request->password;
+        $oldpass = $request->oldpass;
+        // $drc = Crypt::decrypt($oldpass);
+        // $decrypto = Hash::make($request->Password);
+        // dd($drc);
+        if(Hash::check($pass,$oldpass)) {
+            return 'Right password';
+            } else {
+            return 'not';
+        }
+          return view('member.sales.checkpassword');
+
+}catch(\Exception $e){
+   notify()->error('لم يتم العثور عل الامر ', 'عملية فاشلة');
+return back();
+
+}
+}
 
     }

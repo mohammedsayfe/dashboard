@@ -57,7 +57,4 @@ class User extends Authenticatable
         else
             return env('STORAGE_URL').'/uploads/users/'.$this->avatar;
     }
-
-
-
 }

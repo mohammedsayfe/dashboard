@@ -5,9 +5,7 @@
 @section('content')
     <div class="col-12 py-2 px-3 row">
         <h1 class="m-2 px-2 bold">
-            قائمة الحسابات
-            <a href="{{ route('admin.account.create') }}" class="btn btn-info text-white" style="float: left" >إضافة حساب جديد</a>
-            <a href="{{ route('admin.account.details') }}" class="btn btn-info text-white" style="float: left" >تفاصيل عن الحسابات</a>
+                        <<center>تقرير عن حسابات الاعضاء</center>
         </h1>
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
@@ -20,7 +18,7 @@
                         <th>الرصيد</th>
                         <th>الفرع</th>
                         <th>البيان</th>
-                        <th> العمليات</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -34,17 +32,15 @@
                         <td>{{ $accounts->branch }}</td>
                         <td>{{ $accounts-> statement}}
                         <td>
-                            <div class="btn-group">
-                                <a href=" {{ route('admin.account.delete',$accounts->id) }}" class="btn btn-danger"> حذف</a>
-                                <a href=" {{ route('admin.account.edit',$accounts->id) }}" class="btn btn-success">تعديل</a>
-                            </div>
-{{--                           --}}
+
                         </td>
                     </tr>
+
                 @endforeach
 
                 </tbody>
             </table>
+            <a href="{{ route('admin.account.create') }}" class="btn btn-info text-white" style="float: left" >رجوع</a>
         </div>
     </div>
 @endsection

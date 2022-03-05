@@ -97,6 +97,17 @@ class AccountController extends Controller
 
         }
 
+        public function details(){
+            try{
+                $account = Account::all();
+                return view('admin.accounts.details',compact( 'account'));
+            }catch(\Exception $e){
+                return $e;
+                notify()->error('لم يتم العثور علي أمر البيع', 'عملية فاشلة');
+                return back();
+            }
+        }
+
 
 
 }

@@ -6,7 +6,8 @@
 		<div class="col-12 px-0">
 			<div class="col-12 px-3 py-3">
 			 	<span class="fal fa-info-circle"></span>	إضافة منتج جديد
-			</div>
+            </div>
+            <a href="{{ route('admin.product.index') }}" class="btn btn-info text-white" style="float: left" >رجوع</a>
 			<div class="col-12 divider" style="min-height: 2px;"></div>
 		</div>
 		<form id="validate-form" method="POST" action="{{ route('admin.product.store') }}" class="row" enctype="multipart/form-data">
@@ -44,6 +45,7 @@
                         <input type="text" name="description" required  maxlength="190" class="form-control"  >
                     </div>
                 </div>
+
 {{--                <div class="col-12 p-2">--
 {{--                    <div class="col-12">--}}
 {{--                        صورة المنتج--}}
@@ -80,11 +82,12 @@
                         <input type="date" name="expire_date" required maxlength="190" class="form-control"  >
                     </div>
                 </div>
+
             </div>
             <div class="col-12 p-3">
                 <button class="btn btn-success" id="submitEvaluation">حفظ</button>
             </div>
-		</form>
+
 	</div>
 </div>
 @endsection

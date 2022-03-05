@@ -12,9 +12,9 @@
     <div class="col-12 col-md-6 text-center p-0" style="">
         <div class="col-12 p-4 align-items-center justify-content-center d-flex row" style="height:100vh">
             <div class="col-12 p-0">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route($route ?? 'login') }}">
                         @csrf
-                       
+
                         <div class="col-12 p-0 mb-5" style="width: 550px;max-width: 100%;margin: 0px auto;">
                             <h3 class="mb-4">{{ __('lang.login') }}</h3>
                              <div class="divider"></div>
@@ -57,7 +57,7 @@
                                 </label>
                             </div>
                         </div>
- 
+
 
                         <div class="form-group row mb-3  mb-0">
                             <div class="col-md-8 offset-md-4">

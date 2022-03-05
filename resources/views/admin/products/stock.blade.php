@@ -5,7 +5,7 @@
 @section('content')
     <div class="col-12 py-2 px-3 row">
         <h1 class="m-2 px-2 bold">
-            المرحزنو
+                    المخزن
             <a href="{{ route('admin.product.create') }}" class="btn btn-info text-white" style="float: left" >إضافة منتجات جديده</a>
         </h1>
         <div class="table-responsive">

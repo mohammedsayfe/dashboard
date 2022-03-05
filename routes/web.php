@@ -13,6 +13,9 @@ use App\Http\Controllers\HelperController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Member\SaleController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\SiteMapController;
 use App\Http\Controllers\SettingController;
 //use App\Http\Controllers\SalseController;
@@ -29,7 +32,9 @@ Route::get('/', function () {return view('front.index');})->name('home');
 Route::prefix('admin')->middleware(['auth','CheckRole:ADMIN','ActiveAccount'])->name('admin.')->group(function () {
     Route::get('/',[AdminController::class,'index'])->name('index');
 
-    Route::get('/details/{member}', [\App\Http\Controllers\MemberController::class,'details']) -> name('members.details');
+    Route::get('/members/details', [\App\Http\Controllers\MemberController::class,'details']) -> name('members.details');
+    Route::get('/members/delete/{member}', [\App\Http\Controllers\MemberController::class,'delete']) -> name('members.delete');
+
 
     Route::resource('members',\App\Http\Controllers\MemberController::class);
 
@@ -58,7 +63,7 @@ Route::prefix('admin')->middleware(['auth','CheckRole:ADMIN','ActiveAccount'])->
         Route::get('delete/{id}',[ProductController::class,'delete']) -> name('product.delete');
 
         //Report About product
-        Route::get('/details/', [\App\Http\Controllers\ProductController::class,'details']) -> name('product.details');
+        Route::get('details', [ProductController::class,'details']) -> name('product.details');
     });
     ######################### End  product Routes  ########################
 
@@ -75,7 +80,7 @@ Route::prefix('admin')->middleware(['auth','CheckRole:ADMIN','ActiveAccount'])->
         Route::post('update/{assets}',[AssetsController::class,'update']) -> name('assest.update');
         Route::get('delete/{id}',[AssetsController::class,'delete']) -> name('assest.delete');
 
-        Route::get('/details/', [\App\Http\Controllers\AssetsController::class,'details']) -> name('assest.details');
+        Route::get('details', [AssetsController::class,'details']) -> name('assest.details');
     });
     ######################### End  branches Routes  ########################
 
@@ -115,6 +120,9 @@ Route::prefix('admin')->middleware(['auth','CheckRole:ADMIN','ActiveAccount'])->
         Route::get('print/',[AccountController::class,'print']) -> name('account.print');
         Route::POST('update/{account}',[AccountController::class,'update']) -> name('account.update');
         Route::get('delete/{id}',[AccountController::class,'delete']) -> name('account.delete');
+
+          //Report about account
+        Route::get('details', [AccountController::class,'details']) -> name('account.details');
     });
     ######################### end account Route  ########################
 
@@ -128,6 +136,7 @@ Route::prefix('admin')->middleware(['auth','CheckRole:ADMIN','ActiveAccount'])->
         Route::get('print/',[\App\Http\Controllers\SalseController::class,'print']) -> name('sales.print');
         Route::POST('update/{sale}',[\App\Http\Controllers\SalseController::class,'update']) -> name('sales.update');
         Route::POST('update/delete/detail',[\App\Http\Controllers\SalseController::class,'destroy']) -> name('sales.delete.detail');
+        Route::get('delete/{id}',[\App\Http\Controllers\SalseController::class,'delete']) -> name('sales.delete');
         Route::get('delete/{id}',[\App\Http\Controllers\SalseController::class,'delete']) -> name('sales.delete');
 
         // payed the member invoice
@@ -146,7 +155,7 @@ Route::prefix('admin')->middleware(['auth','CheckRole:ADMIN','ActiveAccount'])->
         Route::get('print/',[\App\Http\Controllers\PurchaseController::class,'print']) -> name('purchase.print');
         Route::POST('update/{purchases}',[\App\Http\Controllers\PurchaseController::class,'update']) -> name('purchase.update');
         Route::POST('update/delete/detail',[\App\Http\Controllers\PurchaseController::class,'destroy']) -> name('purchase.delete.detail');
-        Route::get('delete/{id}',[\App\Http\Controllers\PurchaseController::class,'delete']) -> name('purchase.delete');
+        Route::get('chik password',[\App\Http\Controllers\PurchaseController::class,'delete']) -> name('purchase.delete');
     });
     ######################### end sales Route  ########################
 
@@ -185,10 +194,38 @@ Route::prefix('admin')->middleware(['auth','CheckRole:ADMIN','ActiveAccount'])->
 
 // Login member
 
-Route::get('loginMemeber',[MemberController::class,'LoginMember'])->name('LoginMember');
+Route::group(['prefix' => 'member'], function(){
+    Route::get('login',[LoginController::class,'showMemberLoginForm'])->name('LoginMember');
+    Route::post('login',[LoginController::class,'memberLogin'])->name('memberLogin');
+
+    Route::middleware('auth:member')->group(function () {
+        Route::get('/', function(){
+            return auth('member')->user();
+        })->name('member.home');
+        // Route::resource('sales',SaleController::class)->only(['index','create','store']);
+        Route::group(['prefix' => 'sales'], function () {
+            Route::get('/',[SaleController::class,'index'])->name('sales.index');
+            Route::get('create',[SaleController::class,'create'])->name('member.sales.create');
+            Route::post('store',[SaleController::class,'store'])->name('member.sales.store');
+            Route::get('edit/{sale}',[SaleController::class,'edit']) -> name('member.sales.edit');
+            Route::get('print/',[SaleController::class,'print']) -> name('sales.print');
+            Route::POST('update/{sale}',[SaleController::class,'update']) -> name('sales.update');
+            Route::POST('update/delete/detail',[SaleController::class,'destroy']) -> name('sales.delete.detail');
+            Route::get('delete/{id}',[SaleController::class,'delete']) -> name('member.sales.delete');
+            // payed the member invoice
+            Route::get('pay/invoice/{sale}', [SaleController::class,'pay']) -> name('member.sales.pay');
+            Route::get('/details/{sale}', [SaleController::class,'details']) -> name('member.sales.details');
+            });
+
+
+    });
+});
 
 Route::get('blocked',[HelperController::class,'blocked_user'])->name('blocked');
 Route::get('robots.txt',[HelperController::class,'robots']);
 Route::get('manifest.json',[HelperController::class,'manifest']);
 Route::get('sitemap.xml',[SiteMapController::class,'sitemap']);
 Route::get('sitemaps/{name}/{page}/sitemap.xml',[SiteMapController::class,'viewer']);
+// password check
+Route::get('getcheckpassword/{id}',[MemberController::class,'getcheckpassword'])->name('getcheckpassword');
+Route::post('checkpassword',[MemberController::class,'checkpassword'])->name('checkpassword');

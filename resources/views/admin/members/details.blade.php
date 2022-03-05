@@ -5,7 +5,7 @@
             <div class="col-12 col-lg-12 p-0 main-box">
                 <div class="col-12 px-0">
                     <div class="col-12 px-3 py-3">
-                        <span class="fal fa-info-circle"></span> فاتوره - {{ $member->id }}
+                        <span class="fal fa-info-circle"></span> الاعضاء
                     </div>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">

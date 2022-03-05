@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Member;
+use App\Http\Controllers\MemberController;
+
 return [
 
     /*
@@ -46,6 +49,14 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+        // 'admin' => [
+        //     'driver' => 'session',
+        //     'provider' => 'admins',
+        // ],
+        'member' => [
+            'driver' => 'session',
+            'provider' => 'members',
+        ],
     ],
 
     /*
@@ -69,6 +80,15 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        // 'admin' => [
+        //     'driver' => 'eloquent',
+        //     'model' => App\Users::class,
+        // ],
+        'members' => [
+            'driver' => 'eloquent',
+            'model' =>  Member::class,
         ],
 
         // 'users' => [

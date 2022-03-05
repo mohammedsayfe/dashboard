@@ -12,7 +12,6 @@ class ProductController extends Controller
 {
     public function index(){
         $product = Product::all();
-       //return $data;
         return view('admin.products.index', compact('product'));
     }
 
@@ -96,11 +95,13 @@ class ProductController extends Controller
 
 
         }
+
     public function details(){
         try{
-            $data = Product::all();
-            return view('admin.product.details',compact('',  'data'));
+            $product = Product::all();
+            return view('admin.products.details',compact( 'product'));
         }catch(\Exception $e){
+            return $e;
             notify()->error('لم يتم العثور علي أمر البيع', 'عملية فاشلة');
             return back();
         }

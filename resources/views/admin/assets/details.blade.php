@@ -7,7 +7,7 @@
                     <div class="col-12 px-3 py-3">
                         <span class="fal fa-info-circle"></span> فاتوره -
                     </div>
-                    <a href="{{ route('admin.assest.create') }}" class="btn btn-info text-white" style="float: left" >إضافة اصل جديده</a>
+
                     <div class="col-12 divider" style="min-height: 2px;"></div>
                 </div>
                 <table class="table table-bordered table-striped">
@@ -18,7 +18,7 @@
                         <th>قيمة الاصل </th>
                         <th> العدد</th>
                         <th> الوصف</th>
-                        <th>العمليات</th>
+
                     </tr>
                     </thead>
                     <tbody>

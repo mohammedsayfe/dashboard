@@ -5,7 +5,7 @@
             <div class="col-12 col-lg-12 p-0 main-box">
                 <div class="col-12 px-0">
                     <div class="col-12 px-3 py-3">
-                        <span class="fal fa-info-circle"></span> فاتوره -
+                        <span class="fal fa-info-circle"></span>تقرير عن المنتجات
                     </div>
                     <div class="col-12 divider" style="min-height: 2px;"></div>
                 </div>
@@ -34,11 +34,6 @@
                                 <td>{{ $products->users->name }}</td>
                                 <td>{{ $products->expired_date }}</td>
                                 <td>
-                                    <div class="btn-group">
-                                        <a href=" {{ route('admin.product.delete',$products->id) }}" class="btn btn-danger"> حذف</a>
-                                        <a href=" {{ route('admin.product.edit',$products->id) }}" class="btn btn-success">تعديل</a>
-                                    </div>
-                                    {{--                           --}}
                                 </td>
                             </tr>
                         @endforeach

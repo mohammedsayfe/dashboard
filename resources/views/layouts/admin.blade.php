@@ -36,7 +36,7 @@
 
 <body style="background: #f7f7f7" class="dash">
     @yield('after-body')
-    <x:notify-messages />
+    {{-- <x:notify-messages /> --}}
     <div class="col-12 justify-content-end d-flex">
         @if($errors->any())
         <div class="col-12" style="position: absolute;top: 80px;left: 10px;">
@@ -88,162 +88,178 @@
             </div>
         <div class="col-12 px-0 py-5 text-center justify-content-center align-items-center ">
             <a href="{{route('admin.profile.edit')}}">
-            <img src="{{auth()->user()->getUserAvatar()}}" style="width: 55px;height: 55px;color: #fff;border-radius: 50%" class="d-inline-block">
-                </a>
+                @if(auth('web')->check())
+                <img src="{{auth()->user()->getUserAvatar()}}" style="width: 55px;height: 55px;color: #fff;border-radius: 50%" class="d-inline-block">
+                @endif
+            </a>
                 <div class="col-12 px-0 mt-2" style="color: #fff">
                     مرحباً {{auth()->user()->name}}
                 </div>
             </div>
             <div class="col-12 px-0">
+                @if (auth('web')->check())
+                    <div class="col-12 px-0">
+
+                        <a href="{{route('admin.index')}}" class="col-12 px-0">
+                            <div class="col-12 item px-0 d-flex" >
+                                <div style="width: 50px" class="px-3 text-center">
+                                    <span class="fal fa-home font-3"> </span>
+                                </div>
+                                <div style="width: calc(100% - 50px)" class="px-2">
+                                    الرئيسية
+                                </div>
+                            </div>
+                        </a>
+                        <a href="{{ route('admin.members.index') }}" class="col-12 px-0">
+                            <div class="col-12 item px-0 d-flex " >
+                                <div style="width: 50px" class="px-3 text-center">
+                                    <span class="fal fa-users font-3"> </span>
+                                </div>
+                                <div style="width: calc(100% - 50px)" class="px-2">
+                                    الاعضاء
+                                </div>
+                            </div>
+
+                        </a>
+                        <a href="{{ route('admin.all.product') }}" class="col-12 px-0">
+                            <div class="col-12 item px-0 d-flex " >
+                                <div style="width: 50px" class="px-3 text-center">
+                                    <span class="fad fa-box font-3"> </span>
+                                </div>
+                                <div style="width: calc(100% - 50px)" class="px-2">
+                                    المنتجات
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="{{ route('admin.product.stock') }}" class="col-12 px-0">
+                            <div class="col-12 item px-0 d-flex " >
+                                <div style="width: 50px" class="px-3 text-center">
+                                    <span class="fal fa-toolbox font-3"> </span>
+                                </div>
+                                <div style="width: calc(100% - 50px)" class="px-2">
+                                    المخزون
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="{{ route('admin.all.expens') }}" class="col-12 px-0">
+                            <div class="col-12 item px-0 d-flex " >
+                                <div style="width: 50px" class="px-3 text-center">
+                                    <span class="fal fa-arrow-down font-3"> </span>
+                                </div>
+                                <div style="width: calc(100% - 50px)" class="px-2">
+                                    المصروفات
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="{{ route('admin.all.bank') }}" class="col-12 px-0">
+                            <div class="col-12 item px-0 d-flex " >
+                                <div style="width: 50px" class="px-3 text-center">
+                                    <span class="fad fa-piggy-bank font-3"> </span>
+                                </div>
+                                <div style="width: calc(100% - 50px)" class="px-2">
+                                    البنوك
+                                </div>
+                            </div>
+                        </a>
+
+
+                        <a href="{{ route('admin.all.account') }}" class="col-12 px-0">
+                            <div class="col-12 item px-0 d-flex " >
+                                <div style="width: 50px" class="px-3 text-center">
+                                    <span class="fal fa-users font-3"> </span>
+                                </div>
+                                <div style="width: calc(100% - 50px)" class="px-2">
+                                    الحسابات
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="{{ route('admin.all.sales') }}" class="col-12 px-0">
+                            <div class="col-12 item px-0 d-flex " >
+                                <div style="width: 50px" class="px-3 text-center">
+                                    <span class="fal fa-money-bill font-3"> </span>
+                                </div>
+                                <div style="width: calc(100% - 50px)" class="px-2">
+                                    المبيعات
+                                </div>
+                            </div>
+                        </a>
+
+
+
+                        <a href="{{ route('admin.all.purchase') }}" class="col-12 px-0">
+                            <div class="col-12 item px-0 d-flex " >
+                                <div style="width: 50px" class="px-3 text-center">
+                                    <span class="fal fa-money-bill font-3"> </span>
+                                </div>
+                                <div style="width: calc(100% - 50px)" class="px-2">
+                                    المشتريات
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="{{ route('admin.assest.create') }}" class="col-12 px-0">
+                            <div class="col-12 item px-0 d-flex " >
+                                <div style="width: 50px" class="px-3 text-center">
+                                    <span class="fal fa-building font-3"> </span>
+                                </div>
+                                <div style="width: calc(100% - 50px)" class="px-2">
+                                الاصول
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="{{ route('admin.assest.create') }}" class="col-12 px-0">
+                            <div class="col-12 item px-0 d-flex " >
+                                <div style="width: 50px" class="px-3 text-center">
+                                    <span class="fal fa-building font-3"> </span>
+                                </div>
+                                <div style="width: calc(100% - 50px)" class="px-2">
+                                    التقارير
+                                </div>
+                            </div>
+                        </a>
+
+
+                        <a href="{{route('admin.settings.index')}}" class="col-12 px-0">
+                            <div class="col-12 item px-0 d-flex " >
+                                <div style="width: 50px" class="px-3 text-center">
+                                    <span class="fal fa-wrench font-3"> </span>
+                                </div>
+                                <div style="width: calc(100% - 50px)" class="px-2">
+                                الإعدادات
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#" class="col-12 px-0" onclick="document.getElementById('logout-form').submit();">
+                            <div class="col-12 item px-0 d-flex " >
+                                <div style="width: 50px" class="px-3 text-center">
+                                    <span class="fal fa-sign-out-alt font-3"> </span>
+                                </div>
+                                <div style="width: calc(100% - 50px)" class="px-2">
+                                تسجيل خروج
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @else
                 <div class="col-12 px-0">
 
-                    <a href="{{route('admin.index')}}" class="col-12 px-0">
+                    <a href="{{route('sales.index')}}" class="col-12 px-0">
                         <div class="col-12 item px-0 d-flex" >
                             <div style="width: 50px" class="px-3 text-center">
                                 <span class="fal fa-home font-3"> </span>
-                            </div>
-                            <div style="width: calc(100% - 50px)" class="px-2">
-                                الرئيسية
-                            </div>
-                        </div>
-                    </a>
-                     <a href="{{ route('admin.members.index') }}" class="col-12 px-0">
-                        <div class="col-12 item px-0 d-flex " >
-                            <div style="width: 50px" class="px-3 text-center">
-                                <span class="fal fa-users font-3"> </span>
-                            </div>
-                            <div style="width: calc(100% - 50px)" class="px-2">
-                                الاعضاء
-                            </div>
-                        </div>
-
-                    </a>
-                    <a href="{{ route('admin.all.product') }}" class="col-12 px-0">
-                        <div class="col-12 item px-0 d-flex " >
-                            <div style="width: 50px" class="px-3 text-center">
-                                <span class="fad fa-box font-3"> </span>
-                            </div>
-                            <div style="width: calc(100% - 50px)" class="px-2">
-                                المنتجات
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="{{ route('admin.product.stock') }}" class="col-12 px-0">
-                        <div class="col-12 item px-0 d-flex " >
-                            <div style="width: 50px" class="px-3 text-center">
-                                <span class="fal fa-toolbox font-3"> </span>
-                            </div>
-                            <div style="width: calc(100% - 50px)" class="px-2">
-                                المخزون
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="{{ route('admin.all.expens') }}" class="col-12 px-0">
-                        <div class="col-12 item px-0 d-flex " >
-                            <div style="width: 50px" class="px-3 text-center">
-                                <span class="fal fa-arrow-down font-3"> </span>
-                            </div>
-                            <div style="width: calc(100% - 50px)" class="px-2">
-                                المصروفات
-                            </div>
-                        </div>
-                    </a>
-
-
-
-                    <a href="{{ route('admin.all.bank') }}" class="col-12 px-0">
-                        <div class="col-12 item px-0 d-flex " >
-                            <div style="width: 50px" class="px-3 text-center">
-                                <span class="fad fa-piggy-bank font-3"> </span>
-                            </div>
-                            <div style="width: calc(100% - 50px)" class="px-2">
-                                البنوك
-                            </div>
-                        </div>
-                    </a>
-
-
-                    <a href="{{ route('admin.all.account') }}" class="col-12 px-0">
-                        <div class="col-12 item px-0 d-flex " >
-                            <div style="width: 50px" class="px-3 text-center">
-                                <span class="fal fa-users font-3"> </span>
-                            </div>
-                            <div style="width: calc(100% - 50px)" class="px-2">
-                                الحسابات
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="{{ route('admin.all.sales') }}" class="col-12 px-0">
-                        <div class="col-12 item px-0 d-flex " >
-                            <div style="width: 50px" class="px-3 text-center">
-                                <span class="fal fa-money-bill font-3"> </span>
-                            </div>
-                            <div style="width: calc(100% - 50px)" class="px-2">
-                                المبيعات
-                            </div>
-                        </div>
-                    </a>
-
-
-
-                    <a href="{{ route('admin.all.purchase') }}" class="col-12 px-0">
-                        <div class="col-12 item px-0 d-flex " >
-                            <div style="width: 50px" class="px-3 text-center">
-                                <span class="fal fa-money-bill font-3"> </span>
                             </div>
                             <div style="width: calc(100% - 50px)" class="px-2">
                                 المشتريات
                             </div>
                         </div>
                     </a>
-
-                    <a href="{{ route('admin.assest.create') }}" class="col-12 px-0">
-                        <div class="col-12 item px-0 d-flex " >
-                            <div style="width: 50px" class="px-3 text-center">
-                                <span class="fal fa-building font-3"> </span>
-                            </div>
-                            <div style="width: calc(100% - 50px)" class="px-2">
-                               الاصول
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="{{ route('admin.assest.create') }}" class="col-12 px-0">
-                        <div class="col-12 item px-0 d-flex " >
-                            <div style="width: 50px" class="px-3 text-center">
-                                <span class="fal fa-building font-3"> </span>
-                            </div>
-                            <div style="width: calc(100% - 50px)" class="px-2">
-                                التقارير
-                            </div>
-                        </div>
-                    </a>
-
-
-                    <a href="{{route('admin.settings.index')}}" class="col-12 px-0">
-                        <div class="col-12 item px-0 d-flex " >
-                            <div style="width: 50px" class="px-3 text-center">
-                                <span class="fal fa-wrench font-3"> </span>
-                            </div>
-                            <div style="width: calc(100% - 50px)" class="px-2">
-                               الإعدادات
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="col-12 px-0" onclick="document.getElementById('logout-form').submit();">
-                        <div class="col-12 item px-0 d-flex " >
-                            <div style="width: 50px" class="px-3 text-center">
-                                <span class="fal fa-sign-out-alt font-3"> </span>
-                            </div>
-                            <div style="width: calc(100% - 50px)" class="px-2">
-                               تسجيل خروج
-                            </div>
-                        </div>
-                    </a>
                 </div>
+                @endif
             </div>
 
         </div>
@@ -281,8 +297,10 @@
                     </div>
                     <div class="col-12 px-0 d-flex justify-content-center align-items-center  dropdown"  style="width: 60px;height: 60px;" >
                         <div style="width: 60px;height: 60px;" data-bs-toggle="dropdown" aria-expanded="false" class="d-flex justify-content-center align-items-center cursor-pointer">
-                            <img src="{{auth()->user()->getUserAvatar()}}" style="padding: 10px;border-radius: 50%;width: 60px;height: 60px;">
-                        </div>
+                @if(auth('web')->check())
+                <img src="{{auth()->user()->getUserAvatar()}}" style="padding: 10px;border-radius: 50%;width: 60px;height: 60px;">
+            @endif
+            </div>
                         <ul class="dropdown-menu shadow border-0" aria-labelledby="dropdownMenuButton1">
                                 <li><a class="dropdown-item font-1" href="/" target="_blank"><span class="fal fa-desktop font-1"></span> عرض الموقع</a></li>
                                 <li><a class="dropdown-item font-1" href="{{route('admin.profile.index')}}"><span class="fal fa-user font-1"></span> ملفي الشخصي</a></li>
@@ -315,6 +333,11 @@
     <script src="{{asset('/js/validatorjs.min.js')}}"></script>
     <script src="{{asset('/js/favicon_notification.js')}}"></script>
     <script src="{{asset('/js/main.js')}}"></script>
+    <script>
+        $(document).ready(function() {
+          $("#Check-Pass").modal();
+        });
+      </script>
     @livewireScripts
     @notifyJs
     @include('layouts.scripts')
