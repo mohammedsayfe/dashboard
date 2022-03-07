@@ -41,7 +41,7 @@
                            كلمه المرور
                         </div>
                         <div class="col-12 pt-3">
-                            <input type="text" name="email" required minlength="3" maxlength="190" class="form-control"  >
+                            <input type="text" name="password" required minlength="3" maxlength="190" class="form-control"  >
                         </div>
 
                 </div>

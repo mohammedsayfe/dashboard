@@ -63,7 +63,7 @@ Route::prefix('admin')->middleware(['auth','CheckRole:ADMIN','ActiveAccount'])->
         Route::get('delete/{id}',[ProductController::class,'delete']) -> name('product.delete');
 
         //Report About product
-        Route::get('details', [ProductController::class,'details']) -> name('product.details');
+        Route::get('details', [\App\Http\Controllers\ProductController::class,'details']) -> name('product.details');
     });
     ######################### End  product Routes  ########################
 

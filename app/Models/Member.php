@@ -23,7 +23,7 @@ class Member extends Authenticatable
         'id_number',
         'number_of_shares',
         'phone',
-        'password'
+        'password',
     ];
 
     protected $hidden = [
