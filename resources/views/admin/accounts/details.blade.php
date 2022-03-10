@@ -40,7 +40,30 @@
 
                 </tbody>
             </table>
+            <div class="text-center">
+                <button onclick="print_page('#invoice')" class="btn btn-success">طباعة</button>
+            </div>
             <a href="{{ route('admin.account.create') }}" class="btn btn-info text-white" style="float: left" >رجوع</a>
         </div>
     </div>
 @endsection
+
+<script>
+    function print_page(element){
+        var width = document.body.clientWidth;
+        var div_width = $(element).width();
+        console.log(width);
+        console.log(div_width);
+        $(element).css('z-index','1000')
+            .css('width',width+'px')
+            .css('position','absolute')
+            .css('top',0)
+            .css('right',0)
+
+        print()
+
+        location.reload()
+    }
+</script>
+
+

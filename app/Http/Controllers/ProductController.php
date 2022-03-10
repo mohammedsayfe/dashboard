@@ -106,7 +106,15 @@ class ProductController extends Controller
             return back();
         }
     }
+    public function detailss(){
+        try{
+            $data =  Product::select('id','name','quantity','price_sale','price_buy')->get();
+            return view('admin.products.detailss',compact( 'product'));
+        }catch(\Exception $e){
+            return $e;
+            notify()->error('لم يتم العثور علي أمر البيع', 'عملية فاشلة');
+            return back();
 
 
-
+}}
 }

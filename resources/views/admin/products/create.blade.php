@@ -7,10 +7,10 @@
 			<div class="col-12 px-3 py-3">
 			 	<span class="fal fa-info-circle"></span>	إضافة منتج جديد
             </div>
-            <a href="{{ route('admin.product.index') }}" class="btn btn-info text-white" style="float: left" >رجوع</a>
+
 			<div class="col-12 divider" style="min-height: 2px;"></div>
 		</div>
-		<form id="validate-form" method="POST" action="{{ route('admin.product.store') }}" class="row" enctype="multipart/form-data">
+		<form id="validate-form" method="POST" action="{{ route('admin.products.store') }}" class="row" enctype="multipart/form-data">
 		    @csrf
             <div class="col-12 col-lg-12 p-3">
                 <div class="col-12 p-2">
@@ -90,6 +90,7 @@
 
 	</div>
 </div>
+<a href="{{ route('admin.product.index') }}" class="btn btn-info text-white" style="float: left" >رجوع</a>
 @endsection
 @section('scripts')
 @include('admin.templates.dropzone',[
@@ -115,4 +116,4 @@
 'max_file_size'=>'50',
 'accepted_files'=>"['image/*']"
 ])
-@endsection
+
