@@ -43,7 +43,7 @@
             <div class="text-center">
                 <button onclick="print_page('#invoice')" class="btn btn-success">طباعة</button>
             </div>
-            <a href="{{ route('admin.products.index') }}" class="btn btn-info text-white" style="float: left" >رجوع</a>
+            {{-- <a href="{{ route('admin.products.index') }}" class="btn btn-info text-white" style="float: left" >رجوع</a> --}}
 
 @endsection
 

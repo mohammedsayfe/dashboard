@@ -56,7 +56,7 @@ Route::prefix('admin')->middleware(['auth','CheckRole:ADMIN','ActiveAccount'])->
         Route::get('/',[ProductController::class,'index']) -> name('all.product');
         Route::get('/stock', [ProductController::class,'stock']) -> name('product.stock');
         Route::get('create',[ProductController::class,'create']) -> name('product.create');
-        Route::post('store',[ProductController::class,'store']) -> name('product.store');
+        Route::post('store',[ProductController::class,'store']) ->name('product.store');
         Route::get('edit/{id}',[ProductController::class,'edit']) -> name('product.edit');
         Route::get('print/',[ProductController::class,'print']) -> name('product.print');
         Route::post('update/{product}',[ProductController::class,'update']) -> name('product.update');
@@ -160,7 +160,7 @@ Route::prefix('admin')->middleware(['auth','CheckRole:ADMIN','ActiveAccount'])->
         Route::get('print/',[\App\Http\Controllers\PurchaseController::class,'print']) -> name('purchase.print');
         Route::POST('update/{purchases}',[\App\Http\Controllers\PurchaseController::class,'update']) -> name('purchase.update');
         Route::POST('update/delete/detail',[\App\Http\Controllers\PurchaseController::class,'destroy']) -> name('purchase.delete.detail');
-        Route::get('chik password',[\App\Http\Controllers\PurchaseController::class,'delete']) -> name('purchase.delete');
+        Route::get('delete/{purchases}',[\App\Http\Controllers\PurchaseController::class,'delete']) -> name('purchase.delete');
     });
     ######################### end sales Route  ########################
 

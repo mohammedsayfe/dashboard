@@ -7,7 +7,7 @@
         <h1 class="m-2 px-2 bold">
             قائمة المبيعات
             @if(auth('web')->check())
-            <a href="{{ route('admin.sales.create') }}" class="btn btn-info text-white" style="float: left" >إضافة حساب جديد</a>
+            <a href="{{ route('admin.sales.create') }}" class="btn btn-info text-white" style="float: left" >عمليه الشراء</a>
             @else
             <a href="{{ route('member.sales.create') }}" class="btn btn-info text-white" style="float: left" >إضافة حساب جديد</a>
             @endif
