@@ -24,6 +24,9 @@ class SaleDetail extends Model
     public function sale(){
         return $this->belongsTo(Sale::class);
     }
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 
     public function product(){
         return $this->hasOne(Product::class, 'id','product_id');

@@ -21,7 +21,8 @@
                     </tr>
                     <tr>
                         <th style="text-align: left">إسم موظف البيع</th>
-                        <td style="text-align: center">{{ $sale->user->name }}</td>
+                        <td style="text-align: center">{{ $sale->user->name }} </td>
+                        {{-- {{ $sale->user->name }} --}}
                     </tr>
                     <tr>
                         <th style="text-align: left">تاريخ البيع</th>

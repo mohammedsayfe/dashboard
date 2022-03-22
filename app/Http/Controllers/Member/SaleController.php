@@ -175,4 +175,18 @@ class SaleController extends Controller
         }
     }
 
+    public function delete($id){
+
+        $sale = Sale::find($id);
+
+        if($sale)
+            $sale->delete();
+
+        notify()->success('تم حذف بيانات الاصل  بنجاح','عملية ناجحة');
+        return redirect()->route('sales.index');
+
+
+
+    }
+
 }
