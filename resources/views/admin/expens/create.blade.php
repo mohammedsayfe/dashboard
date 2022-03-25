@@ -28,6 +28,7 @@
                         <input type="number" name="value" required  maxlength="190" class="form-control"  >
                     </div>
                 </div>
+            <input type="text" hidden value="{{$balance->id }}" name="balance">
                 <div class="col-12 p-2">
 
                     <div class="col-12 pt-3">

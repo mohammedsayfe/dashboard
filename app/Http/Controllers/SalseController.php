@@ -19,7 +19,7 @@ class SalseController extends Controller
 {
     public function index(){
         $sales = Sale::all();
-//       return $sales;
+       return $sales;
         return view('admin.sales.index', compact('sales'));
     }
 

@@ -48,7 +48,8 @@ class MemberController extends Controller
             Member::create([
                 'name' => $request->name,
                 'id_number' => $request->id_number,
-                'email' => $request->name,
+                'email' => $request->email,
+                'password'=>bcrypt($request->password),
                 'phone' => $request->phone,
                 'number_of_shares' => $request->number_of_shares,
             ]);
@@ -66,7 +67,7 @@ class MemberController extends Controller
                 $member->update([
                     'name' => $request->name,
                     'id_number' => $request->id_number,
-                    'email' => $request->name,
+                    'email' => $request->email,
                     'phone' => $request->phone,
                     'number_of_shares' => $request->number_of_shares,
                 ]);

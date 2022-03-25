@@ -6,6 +6,7 @@ use App\Models\Assets;
 use App\Models\Expens;
 use App\Models\Member;
 use App\Models\Product;
+use App\Models\Safe;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -20,7 +21,9 @@ class ExpensController extends Controller
 
     public function create()
     {
-        return view('admin.expens.create');
+        $balance = Safe::get()->first();
+       // return $balance->id;
+        return view('admin.expens.create', compact('balance'));
     }
 
 //Product $product
@@ -31,9 +34,11 @@ class ExpensController extends Controller
     }
 
     public function store(Request $request){
-         //return $request;
+        // return $request;
         try{
-            Expens::create([
+            $a = Safe::find($request->balance);
+            //return $a;
+               Expens::create([
                 'name' => $request->name,
                 'price' => $request->value,
                 'statement' => $request->statement,
@@ -41,6 +46,11 @@ class ExpensController extends Controller
                 'user_id' => $request->user_id,
 
               ]);
+               $a->update([
+                'balance' => $a->balance - $request->value
+
+                ]);
+
 
             notify()->success('تم حفظ بيانات الاصل  بنجاح','عملية ناجحة');
             return redirect()->route('admin.all.expens');
@@ -77,8 +87,14 @@ class ExpensController extends Controller
     }
 
     public function delete($id){
-
+        $balance = Safe::get()->first();
         $expens = Expens::find($id);
+       // $a = Safe::find($request->balance);
+        $balance->update([
+            'balance' => $balance->balance + $expens->price
+
+            ]);
+
 
         if($expens)
             $expens->delete();
